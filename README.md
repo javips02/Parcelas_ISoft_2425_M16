@@ -1,4 +1,5 @@
-# IS-practicas-enunciados
-Enunciados de prácticas de la asignatura de Ingeniería del Software, Grado de Ingeniería Informática, Escuela de Ingeniería y Arquitectura, Universidad de Zaragoza.
-
-Esta rama contiene el código correspondiente a la aplicación Notepad presentada en la práctica 2.
+# Proyecto de Parcelas y Reservas
+En este proyecto se gestionan una serie de parcelas y reservas para la asignatura de Ingeniería del Software.
+## Integrantes
+- Javier Pérez Salazar, NIP: 815877
+- Sergio Garcés Maluenda, NIP: 843214
