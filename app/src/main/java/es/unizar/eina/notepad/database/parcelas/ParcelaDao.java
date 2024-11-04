@@ -10,23 +10,22 @@ import androidx.room.Update;
 
 import java.util.List;
 
-/** Definición de un Data Access Object para las notas */
+/** Definición de un Data Access Object para las parcelas */
 @Dao
-public interface NoteDao {
+public interface ParcelaDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    long insert(Note note);
+    long insert(Parcela parcela);
 
     @Update
-    int update(Note note);
+    int update(Parcela parcela);
 
     @Delete
-    int delete(Note note);
+    int delete(Parcela parcela);
 
-    @Query("DELETE FROM note")
+    @Query("DELETE FROM parcela")
     void deleteAll();
 
-    @Query("SELECT * FROM note ORDER BY title ASC")
-    LiveData<List<Note>> getOrderedNotes();
+    @Query("SELECT * FROM parcela ORDER BY nombre ASC")
+    LiveData<List<Parcela>> getOrderedNotes();
 }
-

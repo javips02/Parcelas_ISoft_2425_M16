@@ -11,22 +11,22 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Note.class}, version = 1, exportSchema = false)
-public abstract class NoteRoomDatabase extends RoomDatabase {
+@Database(entities = {Parcela.class}, version = 1, exportSchema = false)
+public abstract class ParcelaRoomDatabase extends RoomDatabase {
 
-    public abstract NoteDao noteDao();
+    public abstract ParcelaDao parcelaDao();
 
-    private static volatile NoteRoomDatabase INSTANCE;
+    private static volatile ParcelaRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static NoteRoomDatabase getDatabase(final Context context) {
+    static ParcelaRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (NoteRoomDatabase.class) {
+            synchronized (ParcelaRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    NoteRoomDatabase.class, "note_database")
+                                    ParcelaRoomDatabase.class, "parcela_database")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -45,13 +45,15 @@ public abstract class NoteRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more notes, just add them.
-                NoteDao dao = INSTANCE.noteDao();
+                ParcelaDao dao = INSTANCE.parcelaDao();
                 dao.deleteAll();
 
-                Note note = new Note("Note 1's title", "Note 1's body");
-                dao.insert(note);
-                note = new Note("Note 2's title", "Note 2's body");
-                dao.insert(note);
+                Parcela parcela1 = new Parcela("Parcela 1 nombre", "Esto es una parcela de ejemplo 1",10,125.5);
+                dao.insert(parcela1);
+                Parcela parcela2 = new Parcela("Parcela 2 nombre", "Esto es una parcela de ejemlo 2", 12, 134.31);
+                dao.insert(parcela2);
+                Parcela parcela3 = new Parcela("Parcela 3 nombre", "Esto es una parcela de ejemlo 3", 33, 1200.56);
+                dao.insert(parcela3);
             });
         }
     };

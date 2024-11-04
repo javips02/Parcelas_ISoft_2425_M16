@@ -8,17 +8,17 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import es.unizar.eina.notepad.database.parcelas.Note;
-import es.unizar.eina.notepad.database.parcelas.NoteRepository;
+import es.unizar.eina.notepad.database.parcelas.ParcelaRepository;
 
 public class NoteViewModel extends AndroidViewModel {
 
-    private NoteRepository mRepository;
+    private ParcelaRepository mRepository;
 
     private final LiveData<List<Note>> mAllNotes;
 
     public NoteViewModel(Application application) {
         super(application);
-        mRepository = new NoteRepository(application);
+        mRepository = new ParcelaRepository(application);
         mAllNotes = mRepository.getAllNotes();
     }
 
