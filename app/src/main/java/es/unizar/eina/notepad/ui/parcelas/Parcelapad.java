@@ -14,14 +14,14 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import es.unizar.eina.notepad.database.parcelas.Note;
+import es.unizar.eina.notepad.database.parcelas.Parcela;
 import es.unizar.eina.notepad.R;
 
 import static androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 
-/** Pantalla principal de la aplicación Notepad */
-public class Notepad extends AppCompatActivity {
-    private NoteViewModel mNoteViewModel;
+/** Pantalla principal de la aplicación Parcelapad */
+public class Parcelapad extends AppCompatActivity {
+    private ParcelaViewModel mParcelaViewModel;
 
     static final int INSERT_ID = Menu.FIRST;
     static final int DELETE_ID = Menu.FIRST + 1;
@@ -29,28 +29,28 @@ public class Notepad extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
 
-    NoteListAdapter mAdapter;
+    ParcelaListAdapter mAdapter;
 
     FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notepad);
+        setContentView(R.layout.activity_parcelapad);
         mRecyclerView = findViewById(R.id.recyclerview);
-        mAdapter = new NoteListAdapter(new NoteListAdapter.NoteDiff());
+        mAdapter = new ParcelaListAdapter(new ParcelaListAdapter.ParcelaDiff());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+        mParcelaViewModel = new ViewModelProvider(this).get(ParcelaViewModel.class);
 
-        mNoteViewModel.getAllNotes().observe(this, notes -> {
-            // Update the cached copy of the notes in the adapter.
-            mAdapter.submitList(notes);
+        mParcelaViewModel.getAllParcelas().observe(this, parcelas -> {
+            // Update the cached copy of the parcelas in the adapter.
+            mAdapter.submitList(parcelas);
         });
 
         mFab = findViewById(R.id.fab);
-        mFab.setOnClickListener(view -> createNote());
+        mFab.setOnClickListener(view -> createParcela());
 
         // It doesn't affect if we comment the following instruction
         registerForContextMenu(mRecyclerView);
@@ -59,7 +59,7 @@ public class Notepad extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         boolean result = super.onCreateOptionsMenu(menu);
-        menu.add(Menu.NONE, INSERT_ID, Menu.NONE, R.string.add_note);
+        menu.add(Menu.NONE, INSERT_ID, Menu.NONE, R.string.add_parcela);
         return result;
     }
 
@@ -67,37 +67,37 @@ public class Notepad extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case INSERT_ID:
-                createNote();
+                createParcela();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
      public boolean onContextItemSelected(MenuItem item) {
-        Note current = mAdapter.getCurrent();
+        Parcela current = mAdapter.getCurrent();
         switch (item.getItemId()) {
             case DELETE_ID:
                 Toast.makeText(
                         getApplicationContext(),
-                        "Deleting " + current.getTitle(),
+                        "Deleting " + current.getNombre(),
                         Toast.LENGTH_LONG).show();
-                mNoteViewModel.delete(current);
+                mParcelaViewModel.delete(current);
                 return true;
             case EDIT_ID:
-                editNote(current);
+                editParcela(current);
                 return true;
         }
         return super.onContextItemSelected(item);
     }
 
-    private void createNote() {
-        mStartCreateNote.launch(new Intent(this, ParcelaEdit.class));
+    private void createParcela() {
+        mStartCreateParcela.launch(new Intent(this, ParcelaEdit.class));
     }
 
-    ActivityResultLauncher<Intent> mStartCreateNote = newActivityResultLauncher(new ExecuteActivityResult() {
+    ActivityResultLauncher<Intent> mStartCreateParcela = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
-        public void process(Bundle extras, Note note) {
-            mNoteViewModel.insert(note);
+        public void process(Bundle extras, Parcela parcela) {
+            mParcelaViewModel.insert(parcela);
         }
     });
 
@@ -107,32 +107,36 @@ public class Notepad extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
                         Bundle extras = result.getData().getExtras();
-                        Note note = new Note(extras.getString(ParcelaEdit.NOTE_TITLE),
-                                extras.getString(ParcelaEdit.NOTE_BODY));
-                        executable.process(extras, note);
+                        Parcela parcela = new Parcela(extras.getString(ParcelaEdit.NOMBRE_PARCELA),
+                                extras.getString(ParcelaEdit.DESC_PARCELA),
+                                extras.getInt(String.valueOf(ParcelaEdit.MAX_OCUPANTES)),
+                                extras.getDouble(String.valueOf(ParcelaEdit.PRECIO_PARCELA)));
+                        executable.process(extras, parcela);
                     }
                 });
     }
 
-    private void editNote(Note current) {
+    private void editParcela(Parcela current) { //TODO: revisar que estamos pasando los tipos de datos correctos a la BD cuando depuremos
         Intent intent = new Intent(this, ParcelaEdit.class);
-        intent.putExtra(ParcelaEdit.NOTE_TITLE, current.getTitle());
-        intent.putExtra(ParcelaEdit.NOTE_BODY, current.getBody());
-        intent.putExtra(ParcelaEdit.NOTE_ID, current.getId());
-        mStartUpdateNote.launch(intent);
+        intent.putExtra(ParcelaEdit.NOMBRE_PARCELA, current.getNombre());
+        intent.putExtra(ParcelaEdit.DESC_PARCELA, current.getDesc());
+        intent.putExtra(String.valueOf(ParcelaEdit.MAX_OCUPANTES), current.getMaxOcupantes());
+        intent.putExtra(String.valueOf(ParcelaEdit.PRECIO_PARCELA), current.getPrecioParcela());
+        mStartUpdateParcela.launch(intent);
     }
 
-    ActivityResultLauncher<Intent> mStartUpdateNote = newActivityResultLauncher(new ExecuteActivityResult() {
+    ActivityResultLauncher<Intent> mStartUpdateParcela = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
-        public void process(Bundle extras, Note note) {
-            int id = extras.getInt(ParcelaEdit.NOTE_ID);
-            note.setId(id);
-            mNoteViewModel.update(note);
+        public void process(Bundle extras, Parcela parcela) {
+            String id = extras.getString(ParcelaEdit.NOMBRE_PARCELA);
+            assert id != null;
+            parcela.setNombre(id);
+            mParcelaViewModel.update(parcela);
         }
     });
 
 }
 
 interface ExecuteActivityResult {
-    void process(Bundle extras, Note note);
+    void process(Bundle extras, Parcela parcela);
 }

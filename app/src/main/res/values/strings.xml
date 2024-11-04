@@ -2,9 +2,9 @@
     <string name="app_name">M16_camping</string>
     <string name="button_save">Guardar</string>
     <string name="empty_not_saved_parcela">Parcela no guardada porque el nombre está vacío.</string>
-    <string name="add_note">Add note</string>
-    <string name="menu_delete">Delete Note</string>
-    <string name="menu_edit">Edit Note</string>
+    <string name="add_parcela">Añadir parcela</string>
+    <string name="menu_delete_parcela">Borrar Parcela</string>
+    <string name="menu_edit_parcela">Editar Parcela</string>
     <!-- Recursos para pantalla activity_parcelaedit -->
     <string name="nombre_parcela">Nombre de la Parcela</string>
     <string name="hint_nombre_parcela">Escribe un nombre ...</string>
@@ -14,5 +14,6 @@
     <string name="hint_maxOcupantes_parcela">0</string>
     <string name="precio_parcela">Precio de la Parcela</string>
     <string name="hint_precio_parcela">0</string>
-    <!-- Otros recursos -->
+    <!-- Recursos para pantalla activity_parcelapad -->
+    <string name="titulo_pareclapad">Parcelas</string>
 </resources>
