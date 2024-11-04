@@ -1,12 +1,18 @@
 <resources>
-    <string name="app_name">Notepad</string>
-    <string name="hint_title">Type title ...</string>
-    <string name="hint_body">Type body ...</string>
-    <string name="button_save">Save</string>
-    <string name="empty_not_saved">Note not saved because title is empty.</string>
+    <string name="app_name">M16_camping</string>
+    <string name="button_save">Guardar</string>
+    <string name="empty_not_saved_parcela">Parcela no guardada porque el nombre está vacío.</string>
     <string name="add_note">Add note</string>
     <string name="menu_delete">Delete Note</string>
     <string name="menu_edit">Edit Note</string>
-    <string name="title">Title</string>
-    <string name="body">Body</string>
+    <!-- Recursos para pantalla activity_parcelaedit -->
+    <string name="nombre_parcela">Nombre de la Parcela</string>
+    <string name="hint_nombre_parcela">Escribe un nombre ...</string>
+    <string name="desc_parcela">Descripcion de la Parcela</string>
+    <string name="hint_desc">Escribe una descripción ...</string>
+    <string name="maxOcupantes_parcela">Maximo ocupantes de la Parcela</string>
+    <string name="hint_maxOcupantes_parcela">0</string>
+    <string name="precio_parcela">Precio de la Parcela</string>
+    <string name="hint_precio_parcela">0</string>
+    <!-- Otros recursos -->
 </resources>

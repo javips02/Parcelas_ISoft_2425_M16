@@ -91,7 +91,7 @@ public class Notepad extends AppCompatActivity {
     }
 
     private void createNote() {
-        mStartCreateNote.launch(new Intent(this, NoteEdit.class));
+        mStartCreateNote.launch(new Intent(this, ParcelaEdit.class));
     }
 
     ActivityResultLauncher<Intent> mStartCreateNote = newActivityResultLauncher(new ExecuteActivityResult() {
@@ -107,25 +107,25 @@ public class Notepad extends AppCompatActivity {
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
                         Bundle extras = result.getData().getExtras();
-                        Note note = new Note(extras.getString(NoteEdit.NOTE_TITLE),
-                                extras.getString(NoteEdit.NOTE_BODY));
+                        Note note = new Note(extras.getString(ParcelaEdit.NOTE_TITLE),
+                                extras.getString(ParcelaEdit.NOTE_BODY));
                         executable.process(extras, note);
                     }
                 });
     }
 
     private void editNote(Note current) {
-        Intent intent = new Intent(this, NoteEdit.class);
-        intent.putExtra(NoteEdit.NOTE_TITLE, current.getTitle());
-        intent.putExtra(NoteEdit.NOTE_BODY, current.getBody());
-        intent.putExtra(NoteEdit.NOTE_ID, current.getId());
+        Intent intent = new Intent(this, ParcelaEdit.class);
+        intent.putExtra(ParcelaEdit.NOTE_TITLE, current.getTitle());
+        intent.putExtra(ParcelaEdit.NOTE_BODY, current.getBody());
+        intent.putExtra(ParcelaEdit.NOTE_ID, current.getId());
         mStartUpdateNote.launch(intent);
     }
 
     ActivityResultLauncher<Intent> mStartUpdateNote = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
         public void process(Bundle extras, Note note) {
-            int id = extras.getInt(NoteEdit.NOTE_ID);
+            int id = extras.getInt(ParcelaEdit.NOTE_ID);
             note.setId(id);
             mNoteViewModel.update(note);
         }
