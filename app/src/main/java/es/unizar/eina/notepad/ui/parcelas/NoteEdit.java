@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.ui;
+package es.unizar.eina.notepad.ui.parcelas;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.database;
+package es.unizar.eina.notepad.database.parcelas;
 
 import android.content.Context;
 

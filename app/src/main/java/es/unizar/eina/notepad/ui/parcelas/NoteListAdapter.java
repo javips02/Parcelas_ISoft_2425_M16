@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.ui;
+package es.unizar.eina.notepad.ui.parcelas;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
-import es.unizar.eina.notepad.database.Note;
+import es.unizar.eina.notepad.database.parcelas.Note;
 
 public class NoteListAdapter extends ListAdapter<Note, NoteViewHolder> {
     private int position;

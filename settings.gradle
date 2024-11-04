@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Notepad"
+rootProject.name = "M16_camping"
 include ':app'
