@@ -12,19 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import es.unizar.eina.parcelapad.R;
 
 class ParcelaViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-    private final TextView mNoteItemView;
-
-
+    private final TextView mParcelaItemView;
 
     private ParcelaViewHolder(View itemView) {
         super(itemView);
-        mNoteItemView = itemView.findViewById(R.id.textView);
+        mParcelaItemView = itemView.findViewById(R.id.textView);
 
         itemView.setOnCreateContextMenuListener(this);
     }
 
     public void bind(String text) {
-        mNoteItemView.setText(text);
+        mParcelaItemView.setText(text);
     }
 
     static ParcelaViewHolder create(ViewGroup parent) {
