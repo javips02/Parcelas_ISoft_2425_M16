@@ -1,11 +1,13 @@
-package es.unizar.eina.notepad.database.parcelas;
+package es.unizar.eina.parcelapad.database.parcelas;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-/** Clase anotada como entidad que representa una nota y que consta de título y cuerpo */
+/** Clase anotada como entidad que representa una parcela, que consta de un nombre, una
+ * descripcion, un numero maximo de ocupantes, y el precio que cuesta reservar esa parcela.
+ **/
 @Entity(tableName = "parcela")
 public class Parcela {
     @NonNull

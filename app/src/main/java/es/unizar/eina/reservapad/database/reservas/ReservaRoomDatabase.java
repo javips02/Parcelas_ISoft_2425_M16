@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.database.parcelas;
+package es.unizar.eina.reservapad.database.reservas;
 
 import android.content.Context;
 
@@ -10,23 +10,24 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.time.LocalDate;
 
-@Database(entities = {Parcela.class}, version = 1, exportSchema = false)
-public abstract class ParcelaRoomDatabase extends RoomDatabase {
+@Database(entities = {Reserva.class}, version = 1, exportSchema = false)
+public abstract class ReservaRoomDatabase extends RoomDatabase {
 
-    public abstract ParcelaDao parcelaDao();
+    public abstract ReservaDao reservaDao();
 
-    private static volatile ParcelaRoomDatabase INSTANCE;
+    private static volatile ReservaRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static ParcelaRoomDatabase getDatabase(final Context context) {
+    static ReservaRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (ParcelaRoomDatabase.class) {
+            synchronized (ReservaRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    ParcelaRoomDatabase.class, "parcela_database")
+                                    ReservaRoomDatabase.class, "parcela_database")
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
@@ -35,7 +36,7 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+    private static Callback sRoomDatabaseCallback = new Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -45,15 +46,15 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more notes, just add them.
-                ParcelaDao dao = INSTANCE.parcelaDao();
+                ReservaDao dao = INSTANCE.reservaDao();
                 dao.deleteAll();
 
-                Parcela parcela1 = new Parcela("Parcela 1 nombre", "Esto es una parcela de ejemplo 1",10,125.5);
-                dao.insert(parcela1);
-                Parcela parcela2 = new Parcela("Parcela 2 nombre", "Esto es una parcela de ejemlo 2", 12, 134.31);
-                dao.insert(parcela2);
-                Parcela parcela3 = new Parcela("Parcela 3 nombre", "Esto es una parcela de ejemlo 3", 33, 1200.56);
-                dao.insert(parcela3);
+                Reserva reserva1 = new Reserva("Juan Luis Gonzalez", 676686696,LocalDate.of(2023, 11, 7) ,LocalDate.of(2023, 11, 8));
+                dao.insert(reserva1);
+                Reserva reserva2 = new Reserva("Maria Perez", 676686697,LocalDate.of(2023, 11, 9) , LocalDate.of(2023, 11, 10));
+                dao.insert(reserva2);
+                Reserva reserva3 = new Reserva("Pedro Martinez", 676686698,LocalDate.of(2023, 11, 11) , LocalDate.of(2023, 11, 12));
+                dao.insert(reserva3);
             });
         }
     };

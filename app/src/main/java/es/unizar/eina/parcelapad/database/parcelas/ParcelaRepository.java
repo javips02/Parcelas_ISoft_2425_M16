@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.database.parcelas;
+package es.unizar.eina.parcelapad.database.parcelas;
 
 
 import android.app.Application;
@@ -35,7 +35,7 @@ public class ParcelaRepository {
         mAllParcelas = mParcelaDao.getOrderedNotes();
     }
 
-    /** Devuelve un objeto de tipo LiveData con todas las notas.
+    /** Devuelve un objeto de tipo LiveData con todas las parcelas.
      * Room ejecuta todas las consultas en un hilo separado.
      * El objeto LiveData notifica a los observadores cuando los datos cambian.
      */

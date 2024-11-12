@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.ui.parcelas;
+package es.unizar.eina.parcelapad.ui.parcelas;
 
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 
-class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+class ParcelaViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     private final TextView mNoteItemView;
 
 
 
-    private NoteViewHolder(View itemView) {
+    private ParcelaViewHolder(View itemView) {
         super(itemView);
         mNoteItemView = itemView.findViewById(R.id.textView);
 
@@ -27,10 +27,10 @@ class NoteViewHolder extends RecyclerView.ViewHolder implements View.OnCreateCon
         mNoteItemView.setText(text);
     }
 
-    static NoteViewHolder create(ViewGroup parent) {
+    static ParcelaViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item, parent, false);
-        return new NoteViewHolder(view);
+        return new ParcelaViewHolder(view);
     }
 
 

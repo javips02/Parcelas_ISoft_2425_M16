@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.database.parcelas;
+package es.unizar.eina.reservapad.database.reservas;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -12,20 +12,19 @@ import java.util.List;
 
 /** Definición de un Data Access Object para las parcelas */
 @Dao
-public interface ParcelaDao {
-
+public interface ReservaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    long insert(Parcela parcela);
+    long insert(Reserva reserva);
 
     @Update
-    int update(Parcela parcela);
+    int update(Reserva reserva);
 
     @Delete
-    int delete(Parcela parcela);
+    int delete(Reserva reserva);
 
-    @Query("DELETE FROM parcela")
+    @Query("DELETE FROM reserva")
     void deleteAll();
 
-    @Query("SELECT * FROM parcela ORDER BY nombre ASC")
-    LiveData<List<Parcela>> getOrderedNotes();
+    @Query("SELECT * FROM reserva ORDER BY nombreCliente ASC")
+    LiveData<List<Reserva>> getOrderedNotes();
 }

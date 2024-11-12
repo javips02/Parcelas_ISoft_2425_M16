@@ -13,10 +13,10 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".ui.parcelas.ParcelaEdit"
+            android:name="es.unizar.eina.parcelapad.ui.parcelas.ParcelaEdit"
             android:exported="false" />
         <activity
-            android:name=".ui.parcelas.Parcelapad"
+            android:name="es.unizar.eina.parcelapad.ui.parcelas.Parcelapad"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

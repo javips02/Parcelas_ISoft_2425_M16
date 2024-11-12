@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad.ui.parcelas;
+package es.unizar.eina.parcelapad.ui.parcelas;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import es.unizar.eina.notepad.database.parcelas.Parcela;
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.database.parcelas.Parcela;
+import es.unizar.eina.parcelapad.R;
 
 import static androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 

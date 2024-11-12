@@ -1,4 +1,4 @@
-package es.unizar.eina.notepad;
+package es.unizar.eina.parcelapad;
 
 import org.junit.Test;
 
