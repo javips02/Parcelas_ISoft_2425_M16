@@ -65,13 +65,11 @@ public class Parcelapad extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case INSERT_ID:
-                createParcela();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == INSERT_ID) {
+            createParcela();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
      public boolean onContextItemSelected(MenuItem item) {
