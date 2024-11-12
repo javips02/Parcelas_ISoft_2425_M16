@@ -46,9 +46,7 @@ public class ParcelaEdit extends AppCompatActivity {
                 setResult(RESULT_CANCELED, replyIntent);
                 Toast.makeText(getApplicationContext(), R.string.empty_not_saved_parcela, Toast.LENGTH_LONG).show();
             } else {
-                if (mNombreText!=null) {
-                    replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mNombreText.getText().toString());
-                }
+                replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mNombreText.getText().toString());
                 replyIntent.putExtra(ParcelaEdit.DESC_PARCELA, mDescText.getText().toString());
                 replyIntent.putExtra(String.valueOf(ParcelaEdit.MAX_OCUPANTES), Integer.parseInt(mMaxOcupantesText.getText().toString()));
                 replyIntent.putExtra(String.valueOf(ParcelaEdit.PRECIO_PARCELA), Float.parseFloat(mPrecioText.getText().toString()));
