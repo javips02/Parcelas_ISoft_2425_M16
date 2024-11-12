@@ -16,8 +16,8 @@ public class ParcelaEdit extends AppCompatActivity {
 
     public static final String NOMBRE_PARCELA = "nombre";
     public static final String DESC_PARCELA = "desc";
-    public static final int MAX_OCUPANTES = "maxOcupantes";
-    public static final double PRECIO_PARCELA = "precio";
+    public static final int MAX_OCUPANTES = 0;
+    public static final double PRECIO_PARCELA = 0.0;
 
     private EditText mNombreText;
 
@@ -26,8 +26,6 @@ public class ParcelaEdit extends AppCompatActivity {
     private EditText mMaxOcupantesText;
 
     private EditText mPrecioText;
-
-    private Integer mRowId; //TODO: revisar esta variable, quizás sea "nombre" lo que queremos coger aquí
 
     Button mSaveParcelaButton;
 
@@ -41,27 +39,24 @@ public class ParcelaEdit extends AppCompatActivity {
         mMaxOcupantesText = findViewById(R.id.maxOcupantes);
         mPrecioText = findViewById(R.id.precio);
 
-        mSaveParcelaButtonButton = findViewById(R.id.button_save);
+        mSaveParcelaButton = findViewById(R.id.button_save);
         mSaveParcelaButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
             if (TextUtils.isEmpty(mNombreText.getText())) {
                 setResult(RESULT_CANCELED, replyIntent);
                 Toast.makeText(getApplicationContext(), R.string.empty_not_saved_parcela, Toast.LENGTH_LONG).show();
             } else {
-                replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mNombreText.getText().toString());
+                if (mNombreText!=null) {
+                    replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mNombreText.getText().toString());
+                }
                 replyIntent.putExtra(ParcelaEdit.DESC_PARCELA, mDescText.getText().toString());
                 replyIntent.putExtra(String.valueOf(ParcelaEdit.MAX_OCUPANTES), Integer.parseInt(mMaxOcupantesText.getText().toString()));
                 replyIntent.putExtra(String.valueOf(ParcelaEdit.PRECIO_PARCELA), Float.parseFloat(mPrecioText.getText().toString()));
-                if (mRowId!=null) {
-                    replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mRowId.intValue());
-                }
                 setResult(RESULT_OK, replyIntent);
             }
             finish();
         });
-
         populateFields();
-
     }
 
     private void populateFields () {
