@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import es.unizar.eina.parcelapad.R;
+import es.unizar.eina.notepad.R;
+
 
 class ParcelaViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
     private final TextView mParcelaItemView;
@@ -35,8 +36,8 @@ class ParcelaViewHolder extends RecyclerView.ViewHolder implements View.OnCreate
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         //super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, Parcelapad.DELETE_ID, Menu.NONE, R.string.menu_delete);
-        menu.add(Menu.NONE, Parcelapad.EDIT_ID, Menu.NONE, R.string.menu_edit);
+        menu.add(Menu.NONE, Parcelapad.DELETE_ID, Menu.NONE, R.string.menu_delete_parcela);
+        menu.add(Menu.NONE, Parcelapad.EDIT_ID, Menu.NONE, R.string.menu_edit_parcela);
     }
 
 

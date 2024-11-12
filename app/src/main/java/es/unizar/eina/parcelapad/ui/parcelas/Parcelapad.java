@@ -1,21 +1,18 @@
 package es.unizar.eina.parcelapad.ui.parcelas;
 
-import static android.os.Build.VERSION_CODES.R;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import es.unizar.eina.notepad.R;
 import es.unizar.eina.parcelapad.database.parcelas.Parcela;
 
 import static androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;

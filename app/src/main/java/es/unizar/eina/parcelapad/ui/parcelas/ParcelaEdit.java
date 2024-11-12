@@ -1,7 +1,6 @@
 package es.unizar.eina.parcelapad.ui.parcelas;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,7 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import es.unizar.eina.parcelapad.R;
+import es.unizar.eina.notepad.R;
+
 
 /** Pantalla utilizada para la creación o edición de una nota */
 public class ParcelaEdit extends AppCompatActivity {
