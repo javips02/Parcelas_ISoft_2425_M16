@@ -17,6 +17,8 @@ import es.unizar.eina.parcelapad.database.parcelas.Parcela;
 
 import static androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 
+import java.util.Objects;
+
 /** Pantalla principal de la aplicación Parcelapad */
 public class Parcelapad extends AppCompatActivity {
     private ParcelaViewModel mParcelaViewModel;
@@ -104,8 +106,10 @@ public class Parcelapad extends AppCompatActivity {
                 new StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
+                        assert result.getData() != null;
                         Bundle extras = result.getData().getExtras();
-                        Parcela parcela = new Parcela(extras.getString(ParcelaEdit.NOMBRE_PARCELA),
+                        assert extras != null;
+                        Parcela parcela = new Parcela(Objects.requireNonNull(extras.getString(ParcelaEdit.NOMBRE_PARCELA)),
                                 extras.getString(ParcelaEdit.DESC_PARCELA),
                                 extras.getInt(String.valueOf(ParcelaEdit.MAX_OCUPANTES)),
                                 extras.getDouble(String.valueOf(ParcelaEdit.PRECIO_PARCELA)));
