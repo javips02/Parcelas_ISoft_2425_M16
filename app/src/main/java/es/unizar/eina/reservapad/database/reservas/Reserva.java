@@ -27,18 +27,28 @@ public class Reserva {
 
     @NonNull
     @ColumnInfo(name = "fechaEntrada")
-    private LocalDate fechaEntrada;
+    private String fechaEntrada;
 
     @NonNull
     @ColumnInfo(name = "fechaSalida")
-    private LocalDate fechaSalida;
+    private String fechaSalida;
 
     public Reserva(@NonNull String nombreCliente, @NonNull Integer tlfCliente,
-                   @NonNull LocalDate fechaEntrada, @NonNull LocalDate fechaSalida) {
+                   @NonNull String fechaEntrada, @NonNull String fechaSalida) {
         this.nombreCliente = nombreCliente;
         this.tlfCliente = tlfCliente;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
+    }
+
+    /** Devuelve el ID de la reserva */
+    public @NonNull Integer getID() {
+        return this.ID;
+    }
+
+    /** Permite actualizar el ID de la reserva */
+    public void setID(@NonNull Integer ID) {
+        this.ID = ID;
     }
 
     /** Devuelve el nombre del Cliente de la reserva */
@@ -62,22 +72,22 @@ public class Reserva {
     }
 
     /** Devuelve la fecha de entrada de la reserva */
-    public @NonNull LocalDate getFechaEntrada() {
+    public @NonNull String getFechaEntrada() {
         return this.fechaEntrada;
     }
 
     /** Permite actualizar la fecha de entrada de la reserva */
-    public void setFechaEntrada(@NonNull LocalDate fechaEntrada) {
+    public void setFechaEntrada(@NonNull String fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
     /** Devuelve la fecha de salida de la reserva */
-    public @NonNull LocalDate getFechaSalida() {
+    public @NonNull String getFechaSalida() {
         return this.fechaSalida;
     }
 
     /** Permite actualizar la fecha de salida de la reserva */
-    public void setFechaSalida(@NonNull LocalDate fechaSalida) {
+    public void setFechaSalida(@NonNull String fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 }

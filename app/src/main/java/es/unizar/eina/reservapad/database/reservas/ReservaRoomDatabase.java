@@ -49,11 +49,11 @@ public abstract class ReservaRoomDatabase extends RoomDatabase {
                 ReservaDao dao = INSTANCE.reservaDao();
                 dao.deleteAll();
 
-                Reserva reserva1 = new Reserva("Juan Luis Gonzalez", 676686696,LocalDate.of(2023, 11, 7) ,LocalDate.of(2023, 11, 8));
+                Reserva reserva1 = new Reserva("Juan Luis Gonzalez", 676686696,"7/11/2023", "8/11/2023");
                 dao.insert(reserva1);
-                Reserva reserva2 = new Reserva("Maria Perez", 676686697,LocalDate.of(2023, 11, 9) , LocalDate.of(2023, 11, 10));
+                Reserva reserva2 = new Reserva("Maria Perez", 676686697, "9/11/2023" , "10/11/2023");
                 dao.insert(reserva2);
-                Reserva reserva3 = new Reserva("Pedro Martinez", 676686698,LocalDate.of(2023, 11, 11) , LocalDate.of(2023, 11, 12));
+                Reserva reserva3 = new Reserva("Pedro Martinez", 676686698, "11/11/2023" , "12/11/2023");
                 dao.insert(reserva3);
             });
         }
