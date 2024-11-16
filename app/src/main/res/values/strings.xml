@@ -6,13 +6,13 @@
     <string name="menu_delete_parcela">Borrar Parcela</string>
     <string name="menu_edit_parcela">Editar Parcela</string>
     <!-- Recursos para pantalla activity_parcelaedit -->
-    <string name="nombre_parcela">Nombre de la Parcela</string>
+    <string name="nombre_parcela">Nombre de la Parcela:</string>
     <string name="hint_nombre_parcela">Escribe un nombre ...</string>
-    <string name="desc_parcela">Descripcion de la Parcela</string>
+    <string name="desc_parcela">Descripcion de la Parcela:</string>
     <string name="hint_desc">Escribe una descripción ...</string>
-    <string name="maxOcupantes_parcela">Maximo ocupantes de la Parcela</string>
+    <string name="maxOcupantes_parcela">Max. num. ocupantes de la Parcela:</string>
     <string name="hint_maxOcupantes_parcela">0</string>
-    <string name="precio_parcela">Precio de la Parcela</string>
+    <string name="precio_parcela">Precio de la Parcela:</string>
     <string name="hint_precio_parcela">0</string>
     <!-- Recursos para pantalla activity_parcelapad -->
     <string name="titulo_pareclapad">Parcelas</string>

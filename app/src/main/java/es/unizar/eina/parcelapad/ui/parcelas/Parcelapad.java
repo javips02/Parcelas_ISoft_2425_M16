@@ -53,7 +53,7 @@ public class Parcelapad extends AppCompatActivity {
         mFab.setOnClickListener(view -> createParcela());
 
         // It doesn't affect if we comment the following instruction
-        registerForContextMenu(mRecyclerView);
+        registerForContextMenu(mRecyclerView); // For the options menu to appear when long pressing
 
     }
 
