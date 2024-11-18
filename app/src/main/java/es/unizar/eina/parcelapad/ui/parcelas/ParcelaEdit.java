@@ -16,8 +16,8 @@ public class ParcelaEdit extends AppCompatActivity {
 
     public static final String NOMBRE_PARCELA = "nombre";
     public static final String DESC_PARCELA = "desc";
-    public static final int MAX_OCUPANTES = 0;
-    public static final double PRECIO_PARCELA = 0.0;
+    public static final String MAX_OCUPANTES = "max_ocupantes";
+    public static final String PRECIO_PARCELA = "precio_parcela";
 
     private EditText mNombreText;
 
@@ -48,8 +48,8 @@ public class ParcelaEdit extends AppCompatActivity {
             } else {
                 replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mNombreText.getText().toString());
                 replyIntent.putExtra(ParcelaEdit.DESC_PARCELA, mDescText.getText().toString());
-                replyIntent.putExtra(String.valueOf(ParcelaEdit.MAX_OCUPANTES), Integer.parseInt(mMaxOcupantesText.getText().toString()));
-                replyIntent.putExtra(String.valueOf(ParcelaEdit.PRECIO_PARCELA), Float.parseFloat(mPrecioText.getText().toString()));
+                replyIntent.putExtra(ParcelaEdit.MAX_OCUPANTES, Integer.parseInt(mMaxOcupantesText.getText().toString()));
+                replyIntent.putExtra(ParcelaEdit.PRECIO_PARCELA, Double.parseDouble(mPrecioText.getText().toString()));
                 setResult(RESULT_OK, replyIntent);
             }
             finish();
@@ -62,8 +62,8 @@ public class ParcelaEdit extends AppCompatActivity {
         if (extras!=null) {
             mNombreText.setText(extras.getString(ParcelaEdit.NOMBRE_PARCELA));
             mDescText.setText(extras.getString(ParcelaEdit.DESC_PARCELA));
-            mMaxOcupantesText.setText(extras.getString(String.valueOf(ParcelaEdit.MAX_OCUPANTES)));
-            mPrecioText.setText(extras.getString(String.valueOf(ParcelaEdit.PRECIO_PARCELA)));
+            mMaxOcupantesText.setText(String.valueOf(extras.getInt(ParcelaEdit.MAX_OCUPANTES, 0))); // Valor por defecto 0
+            mPrecioText.setText(String.valueOf(extras.getDouble(ParcelaEdit.PRECIO_PARCELA, 0.0))); // Valor por defecto 0.0
         }
     }
 
