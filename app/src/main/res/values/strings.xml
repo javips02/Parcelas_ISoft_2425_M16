@@ -2,14 +2,22 @@
     <string name="app_name">M16_camping</string>
     <string name="button_save">Guardar</string>
     <string name="empty_not_saved_parcela">Parcela no guardada porque el nombre está vacío.</string>
+    <string name="empty_not_saved_reserva">Reserva no guardada porque el nombre del titular de la reserva está vacío.</string>
     <string name="add_parcela">Añadir parcela</string>
     <string name="menu_delete_parcela">Borrar Parcela</string>
     <string name="menu_edit_parcela">Editar Parcela</string>
     <!-- Recursos para pantalla activity_parcelaedit -->
     <string name="nombre_parcela">Nombre de la Parcela:</string>
+    <string name="nombre_cliente">Nombre de la Reserva:</string>
     <string name="hint_nombre_parcela">Escribe un nombre ...</string>
+    <string name="hint_nombre_cliente">Escribe el nombre del titular de la reserva ...</string>
     <string name="desc_parcela">Descripcion de la Parcela:</string>
+    <string name="tlf_cliente">Teléfono del titular de la reserva:</string>
+    <string name="fecha_entrada">Fecha de entrada:</string>
+    <string name="fecha_salida">Fecha de salida:</string>
     <string name="hint_desc">Escribe una descripción ...</string>
+    <string name="hint_tlf">Escribe del teléfono del titular de la reserva.</string>
+    <string name="hint_fecha">01/01/2000</string>
     <string name="maxOcupantes_parcela">Max. num. ocupantes de la Parcela:</string>
     <string name="hint_maxOcupantes_parcela">0</string>
     <string name="precio_parcela">Precio de la Parcela:</string>
