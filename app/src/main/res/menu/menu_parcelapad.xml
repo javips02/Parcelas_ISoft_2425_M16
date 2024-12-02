@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/filter_name"
+        android:title="@string/filtrar_por_nombre"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/filter_occupants"
+        android:title="@string/filtrar_por_numocupantes"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/filter_price"
+        android:title="@string/filtrar_por_precio"
+        app:showAsAction="never" />
+</menu>

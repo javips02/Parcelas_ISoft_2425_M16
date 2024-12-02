@@ -24,4 +24,7 @@
     <string name="hint_precio_parcela">0</string>
     <!-- Recursos para pantalla activity_parcelapad -->
     <string name="titulo_pareclapad">Parcelas</string>
+    <string name="filtrar_por_nombre">Filtrar por Nombre</string>
+    <string name="filtrar_por_numocupantes">Filtrar por Número de Ocupantes</string>
+    <string name="filtrar_por_precio">Filtrar por Precio (Ascendente)</string>
 </resources>

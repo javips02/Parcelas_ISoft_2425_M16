@@ -1,42 +1,40 @@
 package es.unizar.eina.parcelapad.ui.parcelas;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import es.unizar.eina.notepad.R;
 import es.unizar.eina.parcelapad.database.parcelas.Parcela;
-
-import static androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 
 import java.util.Objects;
 
 /** Pantalla principal de la aplicación Parcelapad */
 public class Parcelapad extends AppCompatActivity {
     private ParcelaViewModel mParcelaViewModel;
-
-    static final int INSERT_ID = Menu.FIRST;
-    static final int DELETE_ID = Menu.FIRST + 1;
-    static final int EDIT_ID = Menu.FIRST + 2;
+    public static final int EDIT_ID = Menu.FIRST;
+    public static final int DELETE_ID = Menu.FIRST+1;
 
     RecyclerView mRecyclerView;
-
     ParcelaListAdapter mAdapter;
-
     FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parcelapad);
+
         mRecyclerView = findViewById(R.id.recyclerview);
         mAdapter = new ParcelaListAdapter(new ParcelaListAdapter.ParcelaDiff());
         mRecyclerView.setAdapter(mAdapter);
@@ -45,52 +43,84 @@ public class Parcelapad extends AppCompatActivity {
         mParcelaViewModel = new ViewModelProvider(this).get(ParcelaViewModel.class);
 
         mParcelaViewModel.getAllParcelas().observe(this, parcelas -> {
-            // Update the cached copy of the parcelas in the adapter.
             mAdapter.submitList(parcelas);
         });
 
         mFab = findViewById(R.id.fab);
         mFab.setOnClickListener(view -> createParcela());
 
-        // It doesn't affect if we comment the following instruction
-        registerForContextMenu(mRecyclerView); // For the options menu to appear when long pressing
-
+        // Registrar menú contextual para los elementos de la lista
+        registerForContextMenu(mRecyclerView);
     }
 
+    // Inflar el menú de la barra superior
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean result = super.onCreateOptionsMenu(menu);
-        menu.add(Menu.NONE, INSERT_ID, Menu.NONE, R.string.add_parcela);
-        return result;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_parcelapad, menu); //nombre del archivo xml en res/menu
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == INSERT_ID) {
-            createParcela();
+        int itemId = item.getItemId();
+        if (itemId == R.id.filter_name) {
+            Toast.makeText(this, "Filtrando por nombre...", Toast.LENGTH_SHORT).show();
+            // Lógica para filtrar por nombre
+            return true;
+        } else if (itemId == R.id.filter_occupants) {
+            Toast.makeText(this, "Filtrando por número de ocupantes...", Toast.LENGTH_SHORT).show();
+            // Lógica para filtrar por número de ocupantes
+            return true;
+        } else if (itemId == R.id.filter_price) {
+            Toast.makeText(this, "Filtrando por precio (ascendente)...", Toast.LENGTH_SHORT).show();
+            // Lógica para filtrar por precio ascendente
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-     public boolean onContextItemSelected(MenuItem item) {
+    // Crear el menú contextual para el RecyclerView
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if (v.getId() == R.id.recyclerview) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.context_menu_parcelapad, menu); // Menú contextual para editar y eliminar
+        }
+    }
+
+    // Manejar las opciones del menú contextual
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
         Parcela current = mAdapter.getCurrent();
-        switch (item.getItemId()) {
-            case DELETE_ID:
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Deleting " + current.getNombre(),
-                        Toast.LENGTH_LONG).show();
-                mParcelaViewModel.delete(current);
-                return true;
-            case EDIT_ID:
-                editParcela(current);
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.edit_parcela) {
+            editParcela(current);
+            return true;
+        } else if (itemId == R.id.delete_parcela) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Eliminando " + current.getNombre(),
+                    Toast.LENGTH_LONG).show();
+            mParcelaViewModel.delete(current);
+            return true;
         }
         return super.onContextItemSelected(item);
     }
 
     private void createParcela() {
         mStartCreateParcela.launch(new Intent(this, ParcelaEdit.class));
+    }
+
+    private void editParcela(Parcela current) {
+        Intent intent = new Intent(this, ParcelaEdit.class);
+        intent.putExtra(ParcelaEdit.NOMBRE_PARCELA, current.getNombre());
+        intent.putExtra(ParcelaEdit.DESC_PARCELA, current.getDesc());
+        intent.putExtra(String.valueOf(ParcelaEdit.MAX_OCUPANTES), current.getMaxOcupantes());
+        intent.putExtra(String.valueOf(ParcelaEdit.PRECIO_PARCELA), current.getPrecioParcela());
+        mStartUpdateParcela.launch(intent);
     }
 
     ActivityResultLauncher<Intent> mStartCreateParcela = newActivityResultLauncher(new ExecuteActivityResult() {
@@ -100,9 +130,19 @@ public class Parcelapad extends AppCompatActivity {
         }
     });
 
-    ActivityResultLauncher<Intent> newActivityResultLauncher(ExecuteActivityResult executable) {
+    ActivityResultLauncher<Intent> mStartUpdateParcela = newActivityResultLauncher(new ExecuteActivityResult() {
+        @Override
+        public void process(Bundle extras, Parcela parcela) {
+            String id = extras.getString(ParcelaEdit.NOMBRE_PARCELA);
+            assert id != null;
+            parcela.setNombre(id);
+            mParcelaViewModel.update(parcela);
+        }
+    });
+
+    private ActivityResultLauncher<Intent> newActivityResultLauncher(ExecuteActivityResult executable) {
         return registerForActivityResult(
-                new StartActivityForResult(),
+                new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
                         assert result.getData() != null;
@@ -116,26 +156,6 @@ public class Parcelapad extends AppCompatActivity {
                     }
                 });
     }
-
-    private void editParcela(Parcela current) { //TODO: revisar que estamos pasando los tipos de datos correctos a la BD cuando depuremos
-        Intent intent = new Intent(this, ParcelaEdit.class);
-        intent.putExtra(ParcelaEdit.NOMBRE_PARCELA, current.getNombre());
-        intent.putExtra(ParcelaEdit.DESC_PARCELA, current.getDesc());
-        intent.putExtra(String.valueOf(ParcelaEdit.MAX_OCUPANTES), current.getMaxOcupantes());
-        intent.putExtra(String.valueOf(ParcelaEdit.PRECIO_PARCELA), current.getPrecioParcela());
-        mStartUpdateParcela.launch(intent);
-    }
-
-    ActivityResultLauncher<Intent> mStartUpdateParcela = newActivityResultLauncher(new ExecuteActivityResult() {
-        @Override
-        public void process(Bundle extras, Parcela parcela) {
-            String id = extras.getString(ParcelaEdit.NOMBRE_PARCELA);
-            assert id != null;
-            parcela.setNombre(id);
-            mParcelaViewModel.update(parcela);
-        }
-    });
-
 }
 
 interface ExecuteActivityResult {
