@@ -3,6 +3,7 @@ package es.unizar.eina.parcelapad.ui.parcelas;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,14 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import es.unizar.eina.notepad.R;
 
 
-class ParcelaViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+class ParcelaViewHolder extends RecyclerView.ViewHolder {
     private final TextView mParcelaItemView;
 
     private ParcelaViewHolder(View itemView) {
         super(itemView);
         mParcelaItemView = itemView.findViewById(R.id.textView);
 
-        itemView.setOnCreateContextMenuListener(this);
+        // Registra el menú contextual para este elemento
+        itemView.setOnLongClickListener(v -> {
+            v.showContextMenu();
+            return true; // Indica que el evento fue manejado
+        });
     }
 
     public void bind(String text) {
@@ -31,14 +36,5 @@ class ParcelaViewHolder extends RecyclerView.ViewHolder implements View.OnCreate
                 .inflate(R.layout.recyclerview_item, parent, false);
         return new ParcelaViewHolder(view);
     }
-
-
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        //super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, Parcelapad.EDIT_ID, Menu.NONE, R.string.menu_edit_parcela);
-        menu.add(Menu.NONE, Parcelapad.DELETE_ID, Menu.NONE, R.string.menu_delete_parcela);
-    }
-
-
 }
+
