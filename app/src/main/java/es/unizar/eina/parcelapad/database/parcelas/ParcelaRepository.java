@@ -32,7 +32,7 @@ public class ParcelaRepository {
     public ParcelaRepository(Application application) {
         ParcelaRoomDatabase db = ParcelaRoomDatabase.getDatabase(application);
         mParcelaDao = db.parcelaDao();
-        mAllParcelas = mParcelaDao.getOrderedNotes();
+        mAllParcelas = mParcelaDao.getParcelas();
     }
 
     /** Devuelve un objeto de tipo LiveData con todas las parcelas.
@@ -41,6 +41,31 @@ public class ParcelaRepository {
      */
     public LiveData<List<Parcela>> getAllParcelas() {
         return mAllParcelas;
+    }
+
+
+    /** Devuelve un objeto de tipo LiveData con todas las parcelas ordenadas alfabéticamente por nembre.
+     * Room ejecuta todas las consultas en un hilo separado.
+     * El objeto LiveData notifica a los observadores cuando los datos cambian.
+     */
+    public LiveData<List<Parcela>> getAllParcelasByNombre() {
+        return mParcelaDao.getOrderedParcelasByName();
+    }
+
+    /** Devuelve un objeto de tipo LiveData con todas las parcelas ordenadas ascendentemente por númeor de ocupantes.
+     * Room ejecuta todas las consultas en un hilo separado.
+     * El objeto LiveData notifica a los observadores cuando los datos cambian.
+     */
+    public LiveData<List<Parcela>> getAllParcelasByOcupantes() {
+        return mParcelaDao.getOrderedParcelasByOcupantes();
+    }
+
+    /** Devuelve un objeto de tipo LiveData con todas las parcelas ordenadas ascendentemente por precio.
+     * Room ejecuta todas las consultas en un hilo separado.
+     * El objeto LiveData notifica a los observadores cuando los datos cambian.
+     */
+    public LiveData<List<Parcela>> getAllParcelasByPrecio() {
+        return mParcelaDao.getAllParcelasByPrecio();
     }
 
     /** Inserta una nota nueva en la base de datos

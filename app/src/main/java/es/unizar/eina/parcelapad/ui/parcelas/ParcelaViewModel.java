@@ -23,6 +23,19 @@ public class ParcelaViewModel extends AndroidViewModel {
     }
 
     LiveData<List<Parcela>> getAllParcelas() { return mAllParcelas; }
+    LiveData<List<Parcela>> getAllParcelasByName() {
+        return mRepository.getAllParcelasByNombre();
+    }
+
+    LiveData<List<Parcela>> getAllParcelasByOcupantes() {
+        return mRepository.getAllParcelasByOcupantes();
+    }
+
+    LiveData<List<Parcela>> getAllParcelasByPrecio() {
+        return mRepository.getAllParcelasByPrecio();
+    }
+
+
 
     public void insert(Parcela parcela) { mRepository.insert(parcela); }
 

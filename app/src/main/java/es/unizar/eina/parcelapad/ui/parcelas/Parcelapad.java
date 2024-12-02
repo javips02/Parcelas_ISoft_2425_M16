@@ -67,14 +67,23 @@ public class Parcelapad extends AppCompatActivity {
         if (itemId == R.id.filter_name) {
             Toast.makeText(this, "Filtrando por nombre...", Toast.LENGTH_SHORT).show();
             // Lógica para filtrar por nombre
+            mParcelaViewModel.getAllParcelasByName().observe(this, parcelas -> {
+                mAdapter.submitList(parcelas);
+            });
             return true;
         } else if (itemId == R.id.filter_occupants) {
             Toast.makeText(this, "Filtrando por número de ocupantes...", Toast.LENGTH_SHORT).show();
             // Lógica para filtrar por número de ocupantes
+            mParcelaViewModel.getAllParcelasByOcupantes().observe(this, parcelas -> {
+                mAdapter.submitList(parcelas);
+            });
             return true;
         } else if (itemId == R.id.filter_price) {
             Toast.makeText(this, "Filtrando por precio (ascendente)...", Toast.LENGTH_SHORT).show();
             // Lógica para filtrar por precio ascendente
+            mParcelaViewModel.getAllParcelasByPrecio().observe(this, parcelas -> {
+                mAdapter.submitList(parcelas);
+            });
             return true;
         }
         return super.onOptionsItemSelected(item);
