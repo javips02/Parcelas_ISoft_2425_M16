@@ -29,7 +29,7 @@ public class ReservaRepository {
         public ReservaRepository(Application application) {
             ReservaRoomDatabase db = ReservaRoomDatabase.getDatabase(application);
             mReservaDao = db.reservaDao();
-            mAllReservas = mReservaDao.getOrderedNotes();
+            mAllReservas = mReservaDao.getAllReservas();
         }
 
     /** Devuelve un objeto de tipo LiveData con todas las reservas.
@@ -69,8 +69,8 @@ public class ReservaRepository {
 
     /** Actualiza una reserva en la base de datos
      * @param reserva La reserva a actualizar
-     * @return Si la reserva se ha actualizado correctamente, devuelve el número de reservas actualizadas. En caso
-     *         contrario, devuelve -1 para indicar el fallo.
+     * @return Si la reserva se ha actualizado correctamente, devuelve el número de reservas a
+     *          ctualizadas. En caso contrario, devuelve -1 para indicar el fallo.
      */
     public int update(Reserva reserva) {
         Future<Integer> future = ReservaRoomDatabase.databaseWriteExecutor.submit(() ->
@@ -87,8 +87,8 @@ public class ReservaRepository {
 
     /** Elimina una reserva de la base de datos
      * @param reserva La reserva a eliminar
-     * @return Si la reserva se ha eliminado correctamente, devuelve el número de reservas eliminadas. En caso
-     *         contrario, devuelve -1 para indicar el fallo.
+     * @return Si la reserva se ha eliminado correctamente, devuelve el número de reservas eliminadas.
+     *          En caso contrario, devuelve -1 para indicar el fallo.
      */
     public int delete(Reserva reserva) {
         Future<Integer> future = ReservaRoomDatabase.databaseWriteExecutor.submit(() ->
@@ -101,5 +101,32 @@ public class ReservaRepository {
             Log.e("ReservaRepository", "Error al eliminar la reserva", ex);
             return -1;
         }
+    }
+
+    /** Devuelve un objeto de tipo LiveData con todas las reservas ordenadas alfabéticamente por
+     * nombre del cliente.
+     * Room ejecuta todas las consultas en un hilo separado.
+     * El objeto LiveData notifica a los observadores cuando los datos cambian.
+     */
+    public LiveData<List<Reserva>> getAllReservasByNombreCliente() {
+        return mReservaDao.getOrderedReservasByNombreCLiente();
+    }
+
+    /** Devuelve un objeto de tipo LiveData con todas las reservas ordenadas alfabéticamente por
+     * telfono del cliente.
+     * Room ejecuta todas las consultas en un hilo separado.
+     * El objeto LiveData notifica a los observadores cuando los datos cambian.
+     */
+    public LiveData<List<Reserva>> getAllReservasByTlfCliente() {
+        return mReservaDao.getOrderedReservasByTlfCLiente();
+    }
+
+    /** Devuelve un objeto de tipo LiveData con todas las reservas ordenadas cronologicamente por
+     * su fecha de entrada.
+     * Room ejecuta todas las consultas en un hilo separado.
+     * El objeto LiveData notifica a los observadores cuando los datos cambian.
+     */
+    public LiveData<List<Reserva>> getAllReservasByFEntrada() {
+        return mReservaDao.getOrderedReservasByFEntrada();
     }
 }

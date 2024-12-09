@@ -15,26 +15,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.Objects;
-
 import es.unizar.eina.notepad.R;
-import es.unizar.eina.parcelapad.database.parcelas.Parcela;
-import es.unizar.eina.parcelapad.ui.parcelas.ParcelaEdit;
-import es.unizar.eina.parcelapad.ui.parcelas.ParcelaListAdapter;
-import es.unizar.eina.parcelapad.ui.parcelas.ParcelaViewModel;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 
-/** Pantalla principal de la aplicación Parcelapad */
+/** Pantalla principal de la aplicación Reservapad */
 public class Reservapad extends AppCompatActivity {
     private ReservaViewModel mReservaViewModel;
     public static final int EDIT_ID = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST+1;
 
     RecyclerView mRecyclerView;
-    ParcelaListAdapter mAdapter;
+    ReservaListAdapter mAdapter;
     FloatingActionButton mFab;
 
     @Override
@@ -71,24 +64,24 @@ public class Reservapad extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.filter_name) {
-            Toast.makeText(this, "Filtrando por nombre...", Toast.LENGTH_SHORT).show();
-            // Lógica para filtrar por nombre
-            mReservaViewModel.getAllReservasByName().observe(this, reservas -> {
+        if (itemId == R.id.filter_nombreCliente) {
+            Toast.makeText(this, "Filtrando por nombre del CLiente...", Toast.LENGTH_SHORT).show();
+            // Lógica para filtrar por nombre del cliente
+            mReservaViewModel.getAllReservasByNombreCliente().observe(this, reservas -> {
                 mAdapter.submitList(reservas);
             });
             return true;
-        } else if (itemId == R.id.filter_occupants) {
-            Toast.makeText(this, "Filtrando por número de ocupantes...", Toast.LENGTH_SHORT).show();
-            // Lógica para filtrar por número de ocupantes
-            mReservaViewModel.getAllReservasByOcupantes().observe(this, reservas -> {
+        } else if (itemId == R.id.filter_tlfCliente) {
+            Toast.makeText(this, "Filtrando por tlf cliente...", Toast.LENGTH_SHORT).show();
+            // Lógica para filtrar por telefono del cliente
+            mReservaViewModel.getAllReservasByTlfCliente().observe(this, reservas -> {
                 mAdapter.submitList(reservas);
             });
             return true;
-        } else if (itemId == R.id.filter_price) {
-            Toast.makeText(this, "Filtrando por precio (ascendente)...", Toast.LENGTH_SHORT).show();
-            // Lógica para filtrar por precio ascendente
-            mReservaViewModel.getAllReservasByPrecio().observe(this, reservas -> {
+        } else if (itemId == R.id.filter_fentrada) {
+            Toast.makeText(this, "Filtrando por fecha de entrada (ascendente)...", Toast.LENGTH_SHORT).show();
+            // Lógica para filtrar por fecha de entrada ascendente
+            mReservaViewModel.getAllReservasByFEntrada().observe(this, reservas -> {
                 mAdapter.submitList(reservas);
             });
             return true;
@@ -110,15 +103,15 @@ public class Reservapad extends AppCompatActivity {
     // Manejar las opciones del menú contextual
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        Parcela current = mAdapter.getCurrent();
+        Reserva current = mAdapter.getCurrent();
         int itemId = item.getItemId();
         if (itemId == R.id.edit_reserva) {
-            editParcela(current);
+            editReserva(current);
             return true;
         } else if (itemId == R.id.delete_reserva) {
             Toast.makeText(
                     getApplicationContext(),
-                    "Eliminando " + current.getNombre(),
+                    "Eliminando reserva con ID " + current.getID(),
                     Toast.LENGTH_LONG).show();
             mReservaViewModel.delete(current);
             return true;
@@ -126,7 +119,7 @@ public class Reservapad extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-    private void createParcela() {
+    private void createReserva() {
         mStartCreateReserva.launch(new Intent(this, ReservaEdit.class));
     }
 
@@ -142,7 +135,7 @@ public class Reservapad extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> mStartCreateReserva = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
-        public void process(Bundle extras, Parcela parcela) {
+        public void process(Bundle extras, Reserva reserva) {
             mReservaViewModel.insert(reserva);
         }
     });

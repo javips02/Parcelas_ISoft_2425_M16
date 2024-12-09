@@ -25,19 +25,17 @@ public class ReservaViewModel extends AndroidViewModel {
     }
 
     LiveData<List<Reserva>> getAllReservas() { return mAllReservas; }
-    LiveData<List<Reserva>> getAllReservasByName() {
-        return mRepository.getAllReservasByNombre();
+    LiveData<List<Reserva>> getAllReservasByNombreCliente() {
+        return mRepository.getAllReservasByNombreCliente();
     }
 
-    LiveData<List<Reserva>> getAllReservasByOcupantes() {
-        return mRepository.getAllReservasByOcupantes();
+    LiveData<List<Reserva>> getAllReservasByTlfCliente() {
+        return mRepository.getAllReservasByTlfCliente();
     }
 
-    LiveData<List<Reserva>> getAllReservasByPrecio() {
-        return mRepository.getAllReservasByPrecio();
+    LiveData<List<Reserva>> getAllReservasByFEntrada() {
+        return mRepository.getAllReservasByFEntrada();
     }
-
-
 
     public void insert(Reserva reserva) { mRepository.insert(reserva); }
 
