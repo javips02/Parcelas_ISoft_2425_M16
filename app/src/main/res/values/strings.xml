@@ -29,4 +29,5 @@
     <string name="filtrar_por_precio">Filtrar por Precio (Ascendente)</string>
     <string name="welcome_image_desc">Imagne de bienvenida para Foodlink_M16</string>
     <string name="bienvenido_a_m16_camping">¡Bienvenido a M16 Camping!</string>
+    <string name="titulo_reservapad">Reservas</string>
 </resources>
