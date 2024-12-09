@@ -173,12 +173,6 @@ public class Reservapad extends AppCompatActivity {
                     }
                 });
     }
-    @Override
-    public void process(Bundle extras, Reserva reserva) {
-        int id = extras.getInt(ReservaEdit.RESERVA_ID);
-        reserva.setID(id);
-        mReservaViewModel.update(reserva);
-    }
 }
 
 interface ExecuteActivityResult {
