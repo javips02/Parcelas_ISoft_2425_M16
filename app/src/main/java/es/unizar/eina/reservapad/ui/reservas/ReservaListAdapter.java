@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import es.unizar.eina.parcelapad.database.parcelas.Parcela;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 
-public class ReservaListAdapter extends ListAdapter<Parcela, ReservaViewHolder> {
+public class ReservaListAdapter extends ListAdapter<Reserva, ReservaViewHolder> {
     private int position;
 
     public int getPosition() {
@@ -36,7 +36,7 @@ public class ReservaListAdapter extends ListAdapter<Parcela, ReservaViewHolder> 
     public void onBindViewHolder(ReservaViewHolder holder, int position) {
 
         Reserva current = getItem(position);
-        holder.bind(current.getID());
+        holder.bind(String.valueOf(current.getID()));
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

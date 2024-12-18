@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.ui.parcelas.ParcelaEdit;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 
 /** Pantalla principal de la aplicación Reservapad */
@@ -157,11 +158,10 @@ public class Reservapad extends AppCompatActivity {
                         assert result.getData() != null;
                         Bundle extras = result.getData().getExtras();
                         assert extras != null;
-                        Reserva reserva = new Reserva( //TODO: agnadir lista parcelas
-                                Objects.requireNonNull(extras.getString(ReservaEdit.NOMBRE_CLIENTE)),
-                                Objects.requireNonNull(extras.getString(ReservaEdit.TLF_CLIENTE)),
+                        Reserva reserva = new Reserva(Objects.requireNonNull(extras.getString(ReservaEdit.NOMBRE_CLIENTE)),
+                                extras.getInt(ReservaEdit.TLF_CLIENTE),
                                 Objects.requireNonNull(extras.getString(ReservaEdit.FECHA_ENTRADA)),
-                                extras.getString(ReservaEdit.FECHA_SALIDA),
+                                Objects.requireNonNull(extras.getString(ParcelaEdit.PRECIO_PARCELA)));
                         executable.process(extras, reserva);
                     }
                 });
