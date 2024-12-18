@@ -25,9 +25,12 @@
     <!-- Recursos para pantalla activity_parcelapad -->
     <string name="titulo_pareclapad">Parcelas</string>
     <string name="filtrar_por_nombre">Filtrar por Nombre</string>
+    <string name="filtrar_por_nombreCliente">Filtrar por Nombre del Cliente</string>
     <string name="filtrar_por_numocupantes">Filtrar por Número de Ocupantes</string>
+    <string name="filtrar_por_numMovil">Filtrar por Número de Móvil</string>
     <string name="filtrar_por_precio">Filtrar por Precio (Ascendente)</string>
-    <string name="welcome_image_desc">Imagne de bienvenida para Foodlink_M16</string>
+    <string name="filtrar_por_fechaEntrada">Filtrar por Fecha de Entrada (Más cercanas a más lejanas)</string>
+    <string name="welcome_image_desc">Imagen de bienvenida para Foodlink_M16</string>
     <string name="bienvenido_a_m16_camping">¡Bienvenido a M16 Camping!</string>
     <string name="titulo_reservapad">Reservas</string>
 </resources>

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/filter_nombreCliente"
+        android:title="@string/filtrar_por_nombreCliente"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/filter_tlfCliente"
+        android:title="@string/filtrar_por_numMovil"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/filter_fentrada"
+        android:title="@string/filtrar_por_fechaEntrada"
+        app:showAsAction="never" />
+</menu>
