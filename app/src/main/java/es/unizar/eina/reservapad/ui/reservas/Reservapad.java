@@ -2,6 +2,7 @@ package es.unizar.eina.reservapad.ui.reservas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -145,7 +146,9 @@ public class Reservapad extends AppCompatActivity {
         @Override
         public void process(Bundle extras, Reserva reserva) {
             Integer id = ReservaEdit.RESERVA_ID;
+            Toast.makeText(getApplicationContext(), "Intento actualizar reserca con ID:" + id, Toast.LENGTH_LONG).show();
             reserva.setID(id);
+            Toast.makeText(getApplicationContext(), "Entro a hacer UPDATE", Toast.LENGTH_LONG).show();
             mReservaViewModel.update(reserva);
         }
     });

@@ -42,14 +42,15 @@ public class ReservaEdit extends AppCompatActivity {
         mSaveReservaButton = findViewById(R.id.button_save_reserva);
         mSaveReservaButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
-            if (TextUtils.isEmpty(mNombreCliente.getText())) {
+            if (TextUtils.isEmpty(mNombreCliente.getText()) || TextUtils.isEmpty(mFEntrada.getText()) || TextUtils.isEmpty(mFSalida.getText())) {
                 setResult(RESULT_CANCELED, replyIntent);
-                Toast.makeText(getApplicationContext(), R.string.empty_not_saved_parcela, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.empty_not_saved_reserva, Toast.LENGTH_LONG).show();
             } else {
                 replyIntent.putExtra(ReservaEdit.NOMBRE_CLIENTE, mNombreCliente.getText().toString());
                 replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, Integer.parseInt(mTlfCliente.getText().toString())); //REVISAR
                 replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, mFEntrada.getText().toString()); //REVISAR
                 replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, mFSalida.getText().toString()); //REVISAR
+                Toast.makeText(getApplicationContext(), "Result OK onClickListener", Toast.LENGTH_LONG).show();
                 setResult(RESULT_OK, replyIntent);
             }
             finish();

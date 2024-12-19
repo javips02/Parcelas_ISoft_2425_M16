@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -143,6 +144,7 @@ public class Parcelapad extends AppCompatActivity {
         @Override
         public void process(Bundle extras, Parcela parcela) {
             String id = extras.getString(ParcelaEdit.NOMBRE_PARCELA);
+            Toast.makeText(getApplicationContext(), "Intento actualizar parcela con nombre:" + id, Toast.LENGTH_LONG).show();
             assert id != null;
             parcela.setNombre(id);
             mParcelaViewModel.update(parcela);

@@ -10,7 +10,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-/** Definición de un Data Access Object para las parcelas */
+/** Definición de un Data Access Object para las reservas */
 @Dao
 public interface ReservaDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
