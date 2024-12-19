@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.ui.parcelas.ParcelaEdit;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 
 
@@ -46,9 +47,9 @@ public class ReservaEdit extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.empty_not_saved_parcela, Toast.LENGTH_LONG).show();
             } else {
                 replyIntent.putExtra(ReservaEdit.NOMBRE_CLIENTE, mNombreCliente.getText().toString());
-                replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, mTlfCliente.getText().toString()); //REVISAR
-                replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, Integer.parseInt(mFEntrada.getText().toString())); //REVISAR
-                replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, Double.parseDouble(mFSalida.getText().toString())); //REVISAR
+                replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, Integer.parseInt(mTlfCliente.getText().toString())); //REVISAR
+                replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, mFEntrada.getText().toString()); //REVISAR
+                replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, mFSalida.getText().toString()); //REVISAR
                 setResult(RESULT_OK, replyIntent);
             }
             finish();
@@ -60,9 +61,9 @@ public class ReservaEdit extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras!=null) {
             mNombreCliente.setText(extras.getString(ReservaEdit.NOMBRE_CLIENTE));
-            mTlfCliente.setText(extras.getString(ReservaEdit.TLF_CLIENTE));
-            mFEntrada.setText(String.valueOf(extras.getInt(ReservaEdit.FECHA_ENTRADA, 01/01/2000))); //REVISAR
-            mFSalida.setText(String.valueOf(extras.getDouble(ReservaEdit.FECHA_SALIDA, 02/01/2000))); //REVISAR
+            mTlfCliente.setText(String.valueOf(extras.getInt(ReservaEdit.TLF_CLIENTE, 000000000)));
+            mFEntrada.setText(String.valueOf(extras.getString(ReservaEdit.FECHA_ENTRADA, "01/01/2000"))); //REVISAR
+            mFSalida.setText(String.valueOf(extras.getString(ReservaEdit.FECHA_SALIDA, "02/01/2000"))); //REVISAR
         }
     }
 

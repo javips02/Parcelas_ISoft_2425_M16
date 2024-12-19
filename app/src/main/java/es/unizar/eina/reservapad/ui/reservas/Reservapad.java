@@ -127,7 +127,7 @@ public class Reservapad extends AppCompatActivity {
     private void editReserva(Reserva current) { //TODO: FALTA LA LISTA DE PARCELAS
         Intent intent = new Intent(this, ReservaEdit.class);
         intent.putExtra(ReservaEdit.NOMBRE_CLIENTE, current.getNombreCliente());
-        intent.putExtra(ReservaEdit.TLF_CLIENTE, current.getTlfCliente());
+        intent.putExtra(String.valueOf(ReservaEdit.TLF_CLIENTE), current.getTlfCliente());
         intent.putExtra(ReservaEdit.FECHA_ENTRADA, current.getFechaEntrada());
         intent.putExtra(ReservaEdit.FECHA_SALIDA, current.getFechaSalida());
         intent.putExtra(String.valueOf(ReservaEdit.RESERVA_ID), current.getID());
@@ -159,9 +159,9 @@ public class Reservapad extends AppCompatActivity {
                         Bundle extras = result.getData().getExtras();
                         assert extras != null;
                         Reserva reserva = new Reserva(Objects.requireNonNull(extras.getString(ReservaEdit.NOMBRE_CLIENTE)),
-                                extras.getInt(ReservaEdit.TLF_CLIENTE),
+                                extras.getInt(String.valueOf(ReservaEdit.TLF_CLIENTE)),
                                 Objects.requireNonNull(extras.getString(ReservaEdit.FECHA_ENTRADA)),
-                                Objects.requireNonNull(extras.getString(ParcelaEdit.PRECIO_PARCELA)));
+                                Objects.requireNonNull(extras.getString(ReservaEdit.FECHA_SALIDA)));
                         executable.process(extras, reserva);
                     }
                 });
