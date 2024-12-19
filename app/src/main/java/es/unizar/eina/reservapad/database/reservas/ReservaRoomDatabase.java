@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.time.LocalDate;
 
-@Database(entities = {Reserva.class}, version = 1, exportSchema = false)
+@Database(entities = {Reserva.class}, version = 2, exportSchema = false)
 public abstract class ReservaRoomDatabase extends RoomDatabase {
 
     public abstract ReservaDao reservaDao();
@@ -28,6 +28,7 @@ public abstract class ReservaRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     ReservaRoomDatabase.class, "parcela_database")
+                            .fallbackToDestructiveMigration() // Permite la migración de la base de datos
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }

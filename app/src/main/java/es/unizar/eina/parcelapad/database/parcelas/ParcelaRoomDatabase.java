@@ -27,6 +27,7 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     ParcelaRoomDatabase.class, "parcela_database")
+                            .fallbackToDestructiveMigration() // Permite la migración de la base de datos
                             .addCallback(sRoomDatabaseCallback)
                             .build();
                 }

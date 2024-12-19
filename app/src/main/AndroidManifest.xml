@@ -18,6 +18,12 @@
         <activity
             android:name="es.unizar.eina.parcelapad.ui.parcelas.Parcelapad"
             android:exported="false" />
+        <activity
+            android:name="es.unizar.eina.reservapad.ui.reservas.ReservaEdit"
+            android:exported="false" />
+        <activity
+            android:name="es.unizar.eina.reservapad.ui.reservas.Reservapad"
+            android:exported="false" />
         <activity android:name="es.unizar.eina.welcome.WelcomeActivity"
             android:exported="true">
             <!-- Establece esta actividad como la principal -->

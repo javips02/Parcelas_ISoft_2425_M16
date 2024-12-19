@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:fontFamily="sans-serif-light"
             android:hint="@string/hint_tlf"
-            android:inputType="textAutoComplete"
+            android:inputType="number"
             android:scrollbars="vertical"
             android:textSize="18sp" />
     </LinearLayout>
@@ -69,7 +69,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/hint_fecha"
-            android:inputType="number" />
+            android:inputType="textAutoComplete" />
 
     </LinearLayout>
 
@@ -91,8 +91,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/hint_fecha"
-
-            android:inputType="numberDecimal" /> <!--REVISAR-->
+            android:inputType="textAutoComplete" />
     </LinearLayout>
 
     <Button
