@@ -39,7 +39,7 @@ public class ReservaEdit extends AppCompatActivity {
         mFEntrada = findViewById(R.id.fecha_entrada);
         mFSalida = findViewById(R.id.fecha_salida);
 
-        mSaveReservaButton = findViewById(R.id.button_save);
+        mSaveReservaButton = findViewById(R.id.button_save_reserva);
         mSaveReservaButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
             if (TextUtils.isEmpty(mNombreCliente.getText())) {

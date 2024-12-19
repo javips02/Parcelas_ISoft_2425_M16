@@ -39,7 +39,7 @@ public class ParcelaEdit extends AppCompatActivity {
         mMaxOcupantesText = findViewById(R.id.maxOcupantes);
         mPrecioText = findViewById(R.id.precio);
 
-        mSaveParcelaButton = findViewById(R.id.button_save);
+        mSaveParcelaButton = findViewById(R.id.button_save_parcela);
         mSaveParcelaButton.setOnClickListener(view -> {
             Intent replyIntent = new Intent();
             if (TextUtils.isEmpty(mNombreText.getText())) {
