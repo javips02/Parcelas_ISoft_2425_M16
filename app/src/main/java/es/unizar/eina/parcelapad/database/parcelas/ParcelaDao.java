@@ -20,7 +20,7 @@ public interface ParcelaDao {
     @Update
     int update(Parcela parcela);
 
-    @Query("UPDATE parcela SET nombre = :nombre, desc = :desc, maxOcupantes = :maxOcupantes, precioParcela = :precio WHERE nombre = :originalNombre")
+    @Query("UPDATE parcela SET nombre = :nombre, `desc` = :desc, maxOcupantes = :maxOcupantes, precioParcela = :precio WHERE nombre = :originalNombre")
     int updateWithOriginalName(String originalNombre, String nombre, String desc, int maxOcupantes, double precio);
 
 
