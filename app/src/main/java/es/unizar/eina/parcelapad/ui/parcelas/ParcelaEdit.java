@@ -27,6 +27,8 @@ public class ParcelaEdit extends AppCompatActivity {
 
     private EditText mPrecioText;
 
+    private String originalNombre; // Nueva variable para almacenar el nombre original
+
     Button mSaveParcelaButton;
 
     @Override
@@ -46,6 +48,7 @@ public class ParcelaEdit extends AppCompatActivity {
                 setResult(RESULT_CANCELED, replyIntent);
                 Toast.makeText(getApplicationContext(), R.string.empty_not_saved_parcela, Toast.LENGTH_LONG).show();
             } else {
+                replyIntent.putExtra("original_nombre", originalNombre);
                 replyIntent.putExtra(ParcelaEdit.NOMBRE_PARCELA, mNombreText.getText().toString());
                 replyIntent.putExtra(ParcelaEdit.DESC_PARCELA, mDescText.getText().toString());
                 replyIntent.putExtra(ParcelaEdit.MAX_OCUPANTES, Integer.parseInt(mMaxOcupantesText.getText().toString()));
@@ -60,6 +63,8 @@ public class ParcelaEdit extends AppCompatActivity {
     private void populateFields () {
         Bundle extras = getIntent().getExtras();
         if (extras!=null) {
+            originalNombre = extras.getString(ParcelaEdit.NOMBRE_PARCELA); // Almacenar nombre original
+            mNombreText.setText(originalNombre);
             mNombreText.setText(extras.getString(ParcelaEdit.NOMBRE_PARCELA));
             mDescText.setText(extras.getString(ParcelaEdit.DESC_PARCELA));
             mMaxOcupantesText.setText(String.valueOf(extras.getInt(ParcelaEdit.MAX_OCUPANTES, 0))); // Valor por defecto 0

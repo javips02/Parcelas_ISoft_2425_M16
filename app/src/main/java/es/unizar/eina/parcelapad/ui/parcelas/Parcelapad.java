@@ -143,13 +143,18 @@ public class Parcelapad extends AppCompatActivity {
     ActivityResultLauncher<Intent> mStartUpdateParcela = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
         public void process(Bundle extras, Parcela parcela) {
-            String id = extras.getString(ParcelaEdit.NOMBRE_PARCELA);
-            Toast.makeText(getApplicationContext(), "Intento actualizar parcela con nombre:" + id, Toast.LENGTH_LONG).show();
-            assert id != null;
-            parcela.setNombre(id);
-            mParcelaViewModel.update(parcela);
+            String originalNombre = extras.getString("original_nombre"); // Recuperar el nombre original
+            if (originalNombre != null && !originalNombre.equals(parcela.getNombre())) {
+                // Actualización del nombre, manejar el caso en el ViewModel
+                Toast.makeText(getApplicationContext(),
+                        "Actualizando parcela (Nombre original: " + originalNombre +
+                                ", Nuevo nombre: " + parcela.getNombre() + ")",
+                        Toast.LENGTH_LONG).show();
+            }
+            mParcelaViewModel.updateWithOriginalName(parcela, originalNombre);
         }
     });
+
 
     private ActivityResultLauncher<Intent> newActivityResultLauncher(ExecuteActivityResult executable) {
         return registerForActivityResult(

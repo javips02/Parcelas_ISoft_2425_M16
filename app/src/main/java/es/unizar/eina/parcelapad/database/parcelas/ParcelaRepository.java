@@ -22,6 +22,8 @@ public class ParcelaRepository {
     private final LiveData<List<Parcela>> mAllParcelas;
 
     private final long TIMEOUT = 15000;
+    private final ParcelaRoomDatabase db;
+
 
     /**
      * Constructor de ParcelaRepository utilizando el contexto de la aplicación para instanciar la base de datos.
@@ -30,9 +32,9 @@ public class ParcelaRepository {
      * <a href="https://github.com/android/architecture-components-samples/blob/main/BasicSample/app/src/main/java/com/example/android/persistence/DataRepository.java">architecture-components-samples/.../persistence/DataRepository</a>
      */
     public ParcelaRepository(Application application) {
-        ParcelaRoomDatabase db = ParcelaRoomDatabase.getDatabase(application);
-        mParcelaDao = db.parcelaDao();
-        mAllParcelas = mParcelaDao.getParcelas();
+        this.db = ParcelaRoomDatabase.getDatabase(application); // Guarda la instancia de la base de datos
+        this.mParcelaDao = db.parcelaDao();
+        this.mAllParcelas = mParcelaDao.getParcelas();
     }
 
     /** Devuelve un objeto de tipo LiveData con todas las parcelas.
@@ -132,4 +134,23 @@ public class ParcelaRepository {
             return -1;
         }
     }
+
+    public void updateWithOriginalName(Parcela parcela, String originalNombre) {
+        ParcelaRoomDatabase.databaseWriteExecutor.execute(() -> {
+            int rowsUpdated = mParcelaDao.updateWithOriginalName(
+                    originalNombre,
+                    parcela.getNombre(),
+                    parcela.getDesc(),
+                    parcela.getMaxOcupantes(),
+                    parcela.getPrecioParcela()
+            );
+            if (rowsUpdated == 0) {
+                Log.w("ParcelaRepository", "No se encontró parcela con nombre original: " + originalNombre);
+            }
+        });
+    }
+
+
+
+
 }

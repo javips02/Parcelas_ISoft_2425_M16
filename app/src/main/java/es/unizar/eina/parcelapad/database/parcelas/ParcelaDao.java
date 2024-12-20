@@ -20,6 +20,10 @@ public interface ParcelaDao {
     @Update
     int update(Parcela parcela);
 
+    @Query("UPDATE parcela SET nombre = :nombre, desc = :desc, maxOcupantes = :maxOcupantes, precioParcela = :precio WHERE nombre = :originalNombre")
+    int updateWithOriginalName(String originalNombre, String nombre, String desc, int maxOcupantes, double precio);
+
+
     @Delete
     int delete(Parcela parcela);
 
@@ -37,4 +41,8 @@ public interface ParcelaDao {
 
     @Query("SELECT * FROM parcela ORDER BY precioParcela ASC")
     LiveData<List<Parcela>> getAllParcelasByPrecio();
+
+    @Query("SELECT * FROM parcela WHERE nombre = :name LIMIT 1")
+    Parcela findByName(String name);
+
 }
