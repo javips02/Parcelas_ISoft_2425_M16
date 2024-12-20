@@ -131,7 +131,6 @@ public class Reservapad extends AppCompatActivity {
         intent.putExtra(String.valueOf(ReservaEdit.TLF_CLIENTE), current.getTlfCliente());
         intent.putExtra(ReservaEdit.FECHA_ENTRADA, current.getFechaEntrada());
         intent.putExtra(ReservaEdit.FECHA_SALIDA, current.getFechaSalida());
-        intent.putExtra(String.valueOf(ReservaEdit.RESERVA_ID), current.getID());
         mStartUpdateReserva.launch(intent);
     }
 
@@ -145,8 +144,9 @@ public class Reservapad extends AppCompatActivity {
     ActivityResultLauncher<Intent> mStartUpdateReserva = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
         public void process(Bundle extras, Reserva reserva) {
-            Integer id = ReservaEdit.RESERVA_ID;
-            Toast.makeText(getApplicationContext(), "Intento actualizar reserca con ID:" + id, Toast.LENGTH_LONG).show();
+            Reserva current = mAdapter.getCurrent();
+            int id = current.getID();
+            Toast.makeText(getApplicationContext(), "Intento actualizar reserva con ID:" + id, Toast.LENGTH_LONG).show();
             reserva.setID(id);
             Toast.makeText(getApplicationContext(), "Entro a hacer UPDATE", Toast.LENGTH_LONG).show();
             mReservaViewModel.update(reserva);

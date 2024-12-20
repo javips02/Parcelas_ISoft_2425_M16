@@ -8,7 +8,7 @@
     <string name="menu_edit_parcela">Editar Parcela</string>
     <!-- Recursos para pantalla activity_parcelaedit -->
     <string name="nombre_parcela">Nombre de la Parcela:</string>
-    <string name="nombre_cliente">Nombre de la Reserva:</string>
+    <string name="nombre_cliente">Nombre del Cliente:</string>
     <string name="hint_nombre_parcela">Escribe un nombre ...</string>
     <string name="hint_nombre_cliente">Escribe el nombre del titular de la reserva ...</string>
     <string name="desc_parcela">Descripcion de la Parcela:</string>

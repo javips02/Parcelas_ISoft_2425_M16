@@ -16,7 +16,6 @@ import es.unizar.eina.reservapad.database.reservas.Reserva;
 /** Pantalla utilizada para la creación o edición de una nota */
 public class ReservaEdit extends AppCompatActivity {
 
-    public static final Integer RESERVA_ID = 0;
     public static final String NOMBRE_CLIENTE = "nombreCliente";
     public static final String TLF_CLIENTE = "tlfCliente";
     public static final String FECHA_ENTRADA = "fecha_entrada";
