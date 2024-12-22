@@ -69,4 +69,28 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
+
+    // Javadoc error solving
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"
+}
+
+android.applicationVariants.all { variant ->
+    task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
+
+        source = variant.javaCompileProvider.get().source
+        destinationDir = file("$rootDir/javadoc/")
+        failOnError false
+
+        doFirst {
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompileProvider.get().classpath.files) + files(ext.androidJar)
+
+            options.addStringOption "-show-members", "package"
+        }
+
+        exclude '**/R.class'
+        exclude '**/R$*.class'
+        exclude '**/R**'
+    }
 }
