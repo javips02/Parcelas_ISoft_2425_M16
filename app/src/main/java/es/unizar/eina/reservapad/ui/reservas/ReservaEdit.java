@@ -7,10 +7,11 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import es.unizar.eina.notepad.R;
-import es.unizar.eina.parcelapad.ui.parcelas.ParcelaEdit;
-import es.unizar.eina.reservapad.database.reservas.Reserva;
 
 
 /** Pantalla utilizada para la creación o edición de una nota */
@@ -40,22 +41,22 @@ public class ReservaEdit extends AppCompatActivity {
 
         mSaveReservaButton = findViewById(R.id.button_save_reserva);
         mSaveReservaButton.setOnClickListener(view -> {
-            Intent replyIntent = new Intent();
-            if (TextUtils.isEmpty(mNombreCliente.getText()) || TextUtils.isEmpty(mFEntrada.getText()) || TextUtils.isEmpty(mFSalida.getText())) {
-                setResult(RESULT_CANCELED, replyIntent);
-                Toast.makeText(getApplicationContext(), R.string.empty_not_saved_reserva, Toast.LENGTH_LONG).show();
-            } else {
+            // Validar campos antes de guardar
+            if (validateFields()) {
+                Intent replyIntent = new Intent();
                 replyIntent.putExtra(ReservaEdit.NOMBRE_CLIENTE, mNombreCliente.getText().toString());
-                replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, Integer.parseInt(mTlfCliente.getText().toString())); //REVISAR
-                replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, mFEntrada.getText().toString()); //REVISAR
-                replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, mFSalida.getText().toString()); //REVISAR
-                Toast.makeText(getApplicationContext(), "Result OK onClickListener", Toast.LENGTH_LONG).show();
+                replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, Integer.parseInt(mTlfCliente.getText().toString()));
+                replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, mFEntrada.getText().toString());
+                replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, mFSalida.getText().toString());
+
                 setResult(RESULT_OK, replyIntent);
+                finish();
             }
-            finish();
         });
+
         populateFields();
     }
+
 
     private void populateFields () {
         Bundle extras = getIntent().getExtras();
@@ -66,5 +67,52 @@ public class ReservaEdit extends AppCompatActivity {
             mFSalida.setText(String.valueOf(extras.getString(ReservaEdit.FECHA_SALIDA, "02/01/2000"))); //REVISAR
         }
     }
+
+    private boolean validateFields() {
+        // Validar que el nombre no esté vacío
+        if (TextUtils.isEmpty(mNombreCliente.getText())) {
+            Toast.makeText(this, "El nombre del cliente no puede estar vacío.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Validar que el teléfono sea numérico y tenga una longitud válida
+        String telefono = mTlfCliente.getText().toString();
+        if (TextUtils.isEmpty(telefono) || !telefono.matches("\\d{9}")) {
+            Toast.makeText(this, "Introduce un número de teléfono válido (9 dígitos).", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Validar que las fechas no estén vacías y tengan un formato correcto
+        String fechaEntrada = mFEntrada.getText().toString();
+        String fechaSalida = mFSalida.getText().toString();
+        if (TextUtils.isEmpty(fechaEntrada) || !fechaEntrada.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Toast.makeText(this, "Introduce una fecha de entrada válida (dd/MM/yyyy).", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(fechaSalida) || !fechaSalida.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            Toast.makeText(this, "Introduce una fecha de salida válida (dd/MM/yyyy).", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Validar que la fecha de salida sea posterior a la de entrada
+        if (!isDateValid(fechaEntrada, fechaSalida)) {
+            Toast.makeText(this, "La fecha de salida debe ser posterior a la fecha de entrada.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isDateValid(String fechaEntrada, String fechaSalida) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            Date entrada = dateFormat.parse(fechaEntrada);
+            Date salida = dateFormat.parse(fechaSalida);
+            return entrada != null && salida != null && salida.after(entrada);
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
 
 }

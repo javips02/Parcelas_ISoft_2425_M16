@@ -2,14 +2,12 @@ package es.unizar.eina.reservapad.ui.reservas;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 import es.unizar.eina.notepad.R;
-import es.unizar.eina.parcelapad.ui.parcelas.ParcelaEdit;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 
 /** Pantalla principal de la aplicación Reservapad */
@@ -138,6 +135,7 @@ public class Reservapad extends AppCompatActivity {
         @Override
         public void process(Bundle extras, Reserva reserva) {
             mReservaViewModel.insert(reserva);
+            Toast.makeText(Reservapad.this, "Reserva creada correctamente", Toast.LENGTH_SHORT).show();
         }
     });
 
