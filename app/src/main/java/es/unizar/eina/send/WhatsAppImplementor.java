@@ -48,6 +48,7 @@ public class WhatsAppImplementor implements SendImplementor{
       }
       if (app_installed) {
          // Crear intent y lanzar actividad
+         Toast.makeText(getSourceActivity(), "WhatsApp SI ", Toast.LENGTH_SHORT).show();
          Uri smsUri= Uri.parse("sms:" + phone);
          Intent sendIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
          sendIntent.putExtra(Intent.EXTRA_TEXT, message);
