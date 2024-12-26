@@ -94,6 +94,47 @@
             android:inputType="textAutoComplete" />
     </LinearLayout>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/big_padding">
+
+        <!-- Relleno para mostrar lista de parcelas -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lista_parcelas"
+            android:textSize="18sp"
+            android:layout_marginBottom="@dimen/small_padding" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/border">
+
+            <LinearLayout
+                android:id="@+id/listaParcelasContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!-- Aquí se agregarán dinámicamente las filas de parcelas -->
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Botón para añadir parcela -->
+        <Button
+            android:id="@+id/button_add_parcela"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_padding"
+            android:background="@color/colorPrimary"
+            android:text="@string/button_add_parcela"
+            android:textColor="@color/buttonLabel" />
+    </LinearLayout>
+
+
     <Button
         android:id="@+id/button_save_reserva"
         android:layout_width="match_parent"

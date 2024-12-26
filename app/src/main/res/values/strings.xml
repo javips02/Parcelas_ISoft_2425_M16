@@ -33,4 +33,7 @@
     <string name="welcome_image_desc">Imagen de bienvenida para Foodlink_M16</string>
     <string name="bienvenido_a_m16_camping">¡Bienvenido a M16 Camping!</string>
     <string name="titulo_reservapad">Reservas</string>
+
+    <string name="lista_parcelas">Lista de parcelas de la Reserva:</string>
+    <string name="button_add_parcela">Añadir Parcela</string>
 </resources>
