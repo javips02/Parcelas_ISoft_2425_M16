@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Objects;
 import es.unizar.eina.notepad.R;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
+import es.unizar.eina.send.SendAbstractionImpl;
 
 /** Pantalla principal de la aplicación Reservapad */
 public class Reservapad extends AppCompatActivity {
@@ -28,6 +29,9 @@ public class Reservapad extends AppCompatActivity {
     RecyclerView mRecyclerView;
     ReservaListAdapter mAdapter;
     FloatingActionButton mFab;
+
+    SendAbstractionImpl senderWS;
+    SendAbstractionImpl senderSMS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,10 @@ public class Reservapad extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mReservaViewModel = new ViewModelProvider(this).get(ReservaViewModel.class);
+
+        // Creo la instancia para los Send
+        senderSMS = new SendAbstractionImpl(this, "SMS");
+        senderWS = new SendAbstractionImpl(this, "WS");
 
         mReservaViewModel.getAllReservas().observe(this, reservas -> {
             mAdapter.submitList(reservas);
@@ -95,7 +103,7 @@ public class Reservapad extends AppCompatActivity {
 
         if (v.getId() == R.id.recyclerview) {
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.context_menu_reservapad, menu); // Menú contextual para editar y eliminar
+            inflater.inflate(R.menu.context_menu_reservapad, menu); // Menú contextual para editar, eliminar y notificar
         }
     }
 
@@ -113,6 +121,36 @@ public class Reservapad extends AppCompatActivity {
                     "Eliminando reserva con ID " + current.getID(),
                     Toast.LENGTH_LONG).show();
             mReservaViewModel.delete(current);
+            return true;
+        } else if (itemId == R.id.notificar_reserva_SMS) {
+            // Recuperar datos de la reserva
+            String phone = String.valueOf(current.getTlfCliente());
+            String message = "Hola " + current.getNombreCliente() +
+                    ", tu reserva desde " + current.getFechaEntrada() +
+                    " hasta " + current.getFechaSalida() + " ha sido confirmada.";
+
+            // Enviar notificación
+            senderSMS.send(phone, message);
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Notificación enviada a " + current.getNombreCliente() + " por SMS",
+                    Toast.LENGTH_LONG).show();
+            return true;
+        } else if (itemId == R.id.notificar_reserva_WS) {
+            // Recuperar datos de la reserva
+            String phone = String.valueOf(current.getTlfCliente());
+            String message = "Hola " + current.getNombreCliente() +
+                    ", tu reserva desde " + current.getFechaEntrada() +
+                    " hasta " + current.getFechaSalida() + " ha sido confirmada.";
+
+            // Enviar notificación
+            senderWS.send(phone, message);
+
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Notificación enviada a " + current.getNombreCliente() + " por WhatsApp",
+                    Toast.LENGTH_LONG).show();
             return true;
         }
         return super.onContextItemSelected(item);

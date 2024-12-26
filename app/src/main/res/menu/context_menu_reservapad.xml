@@ -7,6 +7,9 @@
         android:id="@+id/delete_reserva"
         android:title="Eliminar Reserva" />
     <item
-        android:id="@+id/notificar_reserva"
-        android:title="Notificar Reserva" />
+        android:id="@+id/notificar_reserva_SMS"
+        android:title="Notificar Reserva SMS" />
+    <item
+        android:id="@+id/notificar_reserva_WS"
+        android:title="Notificar Reserva Whatsapp" />
 </menu>
