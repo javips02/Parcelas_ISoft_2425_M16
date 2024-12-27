@@ -46,10 +46,15 @@ public class ParcelaEnReserva {
     @ColumnInfo(name = "ocupantes")
     private int ocupantes;
 
-    public ParcelaEnReserva(@NonNull String parcelaNombre, @NonNull Integer reservaID, @NonNull int ocupantes) {
+    @NonNull
+    @ColumnInfo(name = "precio")
+    private double precio;
+
+    public ParcelaEnReserva(@NonNull String parcelaNombre, @NonNull Integer reservaID, @NonNull int ocupantes, @NonNull double precio) {
         this.parcelaNombre = parcelaNombre;
         this.reservaID = reservaID;
         this.ocupantes = ocupantes;
+        this.precio = precio;
     }
 
     /** Devuelve el nombre de la parcela asociada */
@@ -81,5 +86,17 @@ public class ParcelaEnReserva {
     public void setOcupantes(int ocupantes) {
         this.ocupantes = ocupantes;
     }
+
+    /** Devuelve el precio de la parcela */
+    public double getPrecio() {
+        return precio;
+    }
+
+    /** Permite actualizar el precio de la parcela */
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+
 }
 

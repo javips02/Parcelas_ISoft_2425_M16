@@ -1,17 +1,26 @@
 package es.unizar.eina.reservapad.ui.reservas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import es.unizar.eina.notepad.R;
+import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
+
 
 
 /** Pantalla utilizada para la creación o edición de una nota */
@@ -30,6 +39,10 @@ public class ReservaEdit extends AppCompatActivity {
     Button mSaveReservaButton;
     Button mAddParcelaButton;
 
+
+    private ParcelaEnReservaViewModel mParcelaEnReservaViewModel;
+    private LinearLayout listaParcelasContainer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +52,14 @@ public class ReservaEdit extends AppCompatActivity {
         mTlfCliente = findViewById(R.id.tlfCliente);
         mFEntrada = findViewById(R.id.fecha_entrada);
         mFSalida = findViewById(R.id.fecha_salida);
+        listaParcelasContainer = findViewById(R.id.listaParcelasContainer);
+
+        // Inicializar ViewModel
+        mParcelaEnReservaViewModel = new ViewModelProvider(this).get(ParcelaEnReservaViewModel.class);
+
+        // Observar la lista de parcelas en reserva
+        mParcelaEnReservaViewModel.getAllParcelasEnReserva().observe(this, this::actualizarListaParcelas);
+
 
         mSaveReservaButton = findViewById(R.id.button_save_reserva);
         mSaveReservaButton.setOnClickListener(view -> {
@@ -63,6 +84,29 @@ public class ReservaEdit extends AppCompatActivity {
         });
 
         populateFields();
+    }
+
+    private void actualizarListaParcelas(List<ParcelaEnReserva> parcelas) {
+        // Limpiar el contenedor antes de agregar nuevos elementos
+        listaParcelasContainer.removeAllViews();
+
+        // Inflar dinámicamente cada parcela
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (ParcelaEnReserva parcela : parcelas) {
+            View parcelaView = inflater.inflate(R.layout.parcela_de_reserva, listaParcelasContainer, false);
+
+            // Configurar los datos de la parcela
+            TextView nombreParcela = parcelaView.findViewById(R.id.nombreParcela);
+            TextView numeroOcupantes = parcelaView.findViewById(R.id.numeroOcupantes);
+            TextView precioParcela = parcelaView.findViewById(R.id.precioParcela);
+
+            nombreParcela.setText(parcela.getParcelaNombre());
+            numeroOcupantes.setText(String.valueOf(parcela.getOcupantes()));
+            precioParcela.setText(String.format("€%.2f", parcela.getPrecio()));
+
+            // Agregar la vista inflada al contenedor
+            listaParcelasContainer.addView(parcelaView);
+        }
     }
 
 

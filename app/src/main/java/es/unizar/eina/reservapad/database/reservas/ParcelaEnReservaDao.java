@@ -34,4 +34,6 @@ public interface ParcelaEnReservaDao {
 
     @Query("SELECT * FROM parcela_en_reserva WHERE parcelaNombre= :nombreParcela")
     ParcelaEnReserva fundByParcela(String nombreParcela);
+
+
 }
