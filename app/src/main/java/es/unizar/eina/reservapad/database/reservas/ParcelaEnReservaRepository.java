@@ -136,4 +136,46 @@ public class ParcelaEnReservaRepository {
             return null;
         }
     }
+
+    /**
+     * Verifica si una parcela está en una reserva específica.
+     * @param parcelaNombre El nombre de la parcela.
+     * @param reservaID El ID de la reserva.
+     * @return true si la parcela está en la reserva, false en caso contrario.
+     */
+    public boolean isParcelaInReserva(String parcelaNombre, int reservaID) {
+        Future<Boolean> future = ParcelaEnReservaRoomDatabase.databaseWriteExecutor.submit(() ->
+                mParcelaEnReservaDao.existsInReserva(parcelaNombre, reservaID)
+        );
+
+        try {
+            return future.get(TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException ex) {
+            Log.e("ParcelaEnReservaRepository", "Error al verificar la parcela en la reserva", ex);
+            return false;
+        }
+    }
+
+    /**
+     * Comprueba si una parcela está en alguna reserva que se solape con las fechas dadas.
+     *
+     * @param nombreParcela El nombre de la parcela a comprobar.
+     * @param fechaEntrada La fecha de entrada de tu reserva.
+     * @param fechaSalida La fecha de salida de tu reserva.
+     * @return true si la parcela está en una reserva que se solape con tus fechas; false en caso contrario.
+     */
+    public boolean isParcelaYSolapa(String nombreParcela, String fechaEntrada, String fechaSalida) {
+        Future<Boolean> future = ParcelaEnReservaRoomDatabase.databaseWriteExecutor.submit(() ->
+                mParcelaEnReservaDao.isParcelaYSolapa(nombreParcela, fechaEntrada, fechaSalida)
+        );
+
+        try {
+            return future.get(TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException ex) {
+            Log.e("ParcelaEnReservaRepository", "Error al comprobar solapamiento", ex);
+            return false;
+        }
+    }
+
+
 }

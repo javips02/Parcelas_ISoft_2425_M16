@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -34,6 +35,16 @@ public interface ParcelaEnReservaDao {
 
     @Query("SELECT * FROM parcela_en_reserva WHERE parcelaNombre= :nombreParcela")
     ParcelaEnReserva fundByParcela(String nombreParcela);
+
+    @Query("SELECT COUNT(*) > 0 FROM parcela_en_reserva WHERE parcelaNombre = :parcelaNombre AND reservaID = :reservaID")
+    boolean existsInReserva(String parcelaNombre, int reservaID);
+
+    @Query("SELECT COUNT(*) > 0 FROM parcela_en_reserva " +
+            "JOIN reserva ON parcela_en_reserva.reservaID = reserva.ID " +
+            "WHERE parcelaNombre = :nombreParcela " +
+            "AND ((reserva.fechaEntrada <= :fechaSalida AND reserva.fechaSalida >= :fechaEntrada))")
+    boolean isParcelaYSolapa(String nombreParcela, String fechaEntrada, String fechaSalida);
+
 
 
 }

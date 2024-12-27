@@ -1,5 +1,6 @@
 package es.unizar.eina.reservapad.ui.reservas;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,40 +40,6 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
         loadParcelas();
     }
 
-    private void loadParcelas() {
-        // Obtén las parcelas asociadas y las disponibles
-        parcelaViewModel.getAllParcelasEnReserva().observe(this, parcelas -> {
-            listaParcelasContainer.removeAllViews();
-            for (ParcelaEnReserva parcela : parcelas) {
-                boolean isAsignada = parcela.getReservaID() == reservaId;
-                boolean isDisponible = isParcelaDisponible(parcela, fechaEntrada, fechaSalida);
-
-                View parcelaView = getLayoutInflater().inflate(R.layout.item_lista_parcelas_reserva, listaParcelasContainer, false);
-
-                TextView nombreParcela = parcelaView.findViewById(R.id.nombreParcela);
-                TextView capacidadParcela = parcelaView.findViewById(R.id.capacidadParcela);
-                TextView precioParcela = parcelaView.findViewById(R.id.precioParcela);
-                Button buttonRojo = parcelaView.findViewById(R.id.button_rojo);
-                Button buttonVerde = parcelaView.findViewById(R.id.button_verde);
-
-                nombreParcela.setText(parcela.getParcelaNombre());
-                capacidadParcela.setText(String.valueOf(parcela.getOcupantes()));
-                precioParcela.setText(String.format("€%.2f", parcela.getPrecio()));
-
-                if (isAsignada) {
-                    buttonRojo.setVisibility(View.VISIBLE);
-                    buttonVerde.setVisibility(View.GONE);
-                    buttonRojo.setOnClickListener(v -> removeParcela(parcela));
-                } else if (isDisponible) {
-                    buttonRojo.setVisibility(View.GONE);
-                    buttonVerde.setVisibility(View.VISIBLE);
-                    buttonVerde.setOnClickListener(v -> addParcela(parcela));
-                }
-
-                listaParcelasContainer.addView(parcelaView);
-            }
-        });
-    }
 
     private boolean isParcelaDisponible(ParcelaEnReserva parcela, String fechaEntrada, String fechaSalida) {
         // Lógica para comprobar si la parcela está disponible en las fechas indicadas
