@@ -22,7 +22,7 @@ public class ParcelaViewModel extends AndroidViewModel {
         mAllParcelas = mRepository.getAllParcelas();
     }
 
-    LiveData<List<Parcela>> getAllParcelas() { return mAllParcelas; }
+    public LiveData<List<Parcela>> getAllParcelas() { return mAllParcelas; }
     LiveData<List<Parcela>> getAllParcelasByName() {
         return mRepository.getAllParcelasByNombre();
     }
