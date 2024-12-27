@@ -12,7 +12,7 @@
     <string name="hint_nombre_parcela">Escribe un nombre ...</string>
     <string name="hint_nombre_cliente">Escribe el nombre del titular de la reserva ...</string>
     <string name="desc_parcela">Descripcion de la Parcela:</string>
-    <string name="tlf_cliente">Teléfono del titular de la reserva:</string>
+    <string name="tlf_cliente">Teléfono del Cliente:</string>
     <string name="fecha_entrada">Fecha de entrada:</string>
     <string name="fecha_salida">Fecha de salida:</string>
     <string name="hint_desc">Escribe una descripción ...</string>
@@ -35,5 +35,9 @@
     <string name="titulo_reservapad">Reservas</string>
 
     <string name="lista_parcelas">Lista de parcelas de la Reserva:</string>
-    <string name="button_add_parcela">Añadir Parcela</string>
+    <string name="button_add_parcela">Añadir/Eliminar Parcela</string>
+    <string name="button_save_add_parcela">Volver</string>
+    <string name="lista_parcelas_todas">Lista de todas las parcelas disponibles para añadir a su reserva:</string>
+    <string name="estado_disponible">+</string>
+    <string name="estado_no_disponible">-</string>
 </resources>

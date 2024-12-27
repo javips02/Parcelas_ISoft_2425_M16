@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/small_padding"
+    android:layout_marginBottom="@dimen/small_padding"
+    tools:ignore="ExtraText">
+
+    <!-- Contenedor para los elementos de la parcela -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/nombreParcela"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Nombre"
+            android:textSize="16sp"
+            android:padding="@dimen/small_padding" />
+
+        <TextView
+            android:id="@+id/capacidadParcela"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Capacidad"
+            android:textSize="16sp"
+            android:padding="@dimen/small_padding" />
+
+        <TextView
+            android:id="@+id/precioParcela"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Precio"
+            android:textSize="16sp"
+            android:padding="@dimen/small_padding" />
+
+        <Button
+            android:id="@+id/button_verde"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:text="@string/estado_disponible"
+            android:textSize="14sp"
+            android:padding="@dimen/small_padding"
+            android:backgroundTint="@color/colorGreen"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_rojo"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorRed"
+            android:padding="@dimen/small_padding"
+            android:text="@string/estado_no_disponible"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Línea azul debajo -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary" />
+        android:layout_marginTop="@dimen/small_padding" />
+</LinearLayout>

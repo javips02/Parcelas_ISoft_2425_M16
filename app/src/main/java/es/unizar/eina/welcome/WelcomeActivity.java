@@ -20,22 +20,16 @@ public class WelcomeActivity extends AppCompatActivity {
         Button parcelasButton = findViewById(R.id.button_parcelas);
 
         // Configura el listener para el botón
-        parcelasButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Crea un Intent para lanzar la actividad Parcelapad
-                Intent intent = new Intent(WelcomeActivity.this, Parcelapad.class);
-                startActivity(intent);
-            }
+        parcelasButton.setOnClickListener(view -> {
+            // Crea un Intent para lanzar la actividad Parcelapad
+            Intent intent = new Intent(WelcomeActivity.this, Parcelapad.class);
+            startActivity(intent);
         });
 
         Button reservasButton = findViewById(R.id.button_reservas);
-        reservasButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WelcomeActivity.this, Reservapad.class);
-                startActivity(intent);
-            }
+        reservasButton.setOnClickListener(view -> {
+            Intent intent = new Intent(WelcomeActivity.this, Reservapad.class);
+            startActivity(intent);
         });
     }
 }

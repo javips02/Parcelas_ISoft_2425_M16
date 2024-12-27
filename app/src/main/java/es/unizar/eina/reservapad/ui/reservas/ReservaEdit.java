@@ -28,6 +28,7 @@ public class ReservaEdit extends AppCompatActivity {
     private EditText mFSalida;
 
     Button mSaveReservaButton;
+    Button mAddParcelaButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,13 @@ public class ReservaEdit extends AppCompatActivity {
                 setResult(RESULT_OK, replyIntent);
                 finish();
             }
+        });
+
+        //Creo listener para el botón de añadir parcela para que me lleve a la actividad de añadir parcela
+        mAddParcelaButton = findViewById(R.id.button_add_parcela);
+        mAddParcelaButton.setOnClickListener(view -> {
+            Intent intent = new Intent(ReservaEdit.this, ParcelaEnReservaEdit.class);
+            startActivity(intent);
         });
 
         populateFields();
