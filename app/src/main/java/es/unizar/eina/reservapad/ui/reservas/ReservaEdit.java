@@ -30,11 +30,13 @@ public class ReservaEdit extends AppCompatActivity {
     public static final String TLF_CLIENTE = "tlfCliente";
     public static final String FECHA_ENTRADA = "fecha_entrada";
     public static final String FECHA_SALIDA = "fecha_salida";
+    public static final String RESERVA_ID = "reservaId";
 
     private EditText mNombreCliente;
     private EditText mTlfCliente;
     private EditText mFEntrada;
     private EditText mFSalida;
+    private int reservaId;
 
     Button mSaveReservaButton;
     Button mAddParcelaButton;
@@ -53,6 +55,7 @@ public class ReservaEdit extends AppCompatActivity {
         mFEntrada = findViewById(R.id.fecha_entrada);
         mFSalida = findViewById(R.id.fecha_salida);
         listaParcelasContainer = findViewById(R.id.listaParcelasContainer);
+        reservaId = getIntent().getIntExtra(RESERVA_ID, -1); // Recupera correctamente
 
         // Inicializar ViewModel
         mParcelaEnReservaViewModel = new ViewModelProvider(this).get(ParcelaEnReservaViewModel.class);
@@ -80,6 +83,7 @@ public class ReservaEdit extends AppCompatActivity {
         mAddParcelaButton = findViewById(R.id.button_add_parcela);
         mAddParcelaButton.setOnClickListener(view -> {
             Intent intent = new Intent(ReservaEdit.this, ParcelaEnReservaEdit.class);
+            intent.putExtra("reservaId", reservaId);
             startActivity(intent);
         });
 

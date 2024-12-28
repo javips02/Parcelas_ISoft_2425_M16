@@ -25,6 +25,7 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (ParcelaRoomDatabase.class) {
                 if (INSTANCE == null) {
+                    context.deleteDatabase("parcela_database");
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     ParcelaRoomDatabase.class, "parcela_database")
                             .fallbackToDestructiveMigration() // Permite la migración de la base de datos
@@ -47,7 +48,7 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
                 // Populate the database in the background.
                 // If you want to start with more notes, just add them.
                 ParcelaDao dao = INSTANCE.parcelaDao();
-                dao.deleteAll();
+                //dao.deleteAll();
 
                 Parcela parcela1 = new Parcela("Parcela 1 nombre", "Esto es una parcela de ejemplo 1",10,125.5);
                 dao.insert(parcela1);

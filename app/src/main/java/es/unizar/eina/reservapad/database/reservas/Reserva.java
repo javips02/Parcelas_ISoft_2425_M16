@@ -12,7 +12,6 @@ import java.time.LocalDate;
  **/
 @Entity(tableName = "reserva")
 public class Reserva {
-    @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "ID")
     private Integer ID;
