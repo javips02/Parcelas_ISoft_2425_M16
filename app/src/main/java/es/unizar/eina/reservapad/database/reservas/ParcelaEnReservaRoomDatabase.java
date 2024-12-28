@@ -25,10 +25,13 @@ public abstract class ParcelaEnReservaRoomDatabase extends RoomDatabase{
             synchronized (ParcelaEnReservaRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    ParcelaEnReservaRoomDatabase.class, "pr_database")
+                                    ParcelaEnReservaRoomDatabase.class, "unified_db")
                             .fallbackToDestructiveMigration() // Permite la migración de la base de datos
                             .addCallback(sRoomDatabaseCallback)
                             .build();
+                } else { //lenar ocn datos de prueba simplemente
+                    ParcelaEnReservaDao dao = INSTANCE.parcelaEnReservaDao();
+                    dao.deleteAll();
                 }
             }
         }

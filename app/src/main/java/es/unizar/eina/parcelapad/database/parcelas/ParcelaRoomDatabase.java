@@ -11,6 +11,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import es.unizar.eina.reservapad.database.reservas.ReservaRoomDatabase;
+
 @Database(entities = {Parcela.class}, version = 1, exportSchema = false)
 public abstract class ParcelaRoomDatabase extends RoomDatabase {
 
@@ -27,16 +29,30 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     context.deleteDatabase("parcela_database");
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    ParcelaRoomDatabase.class, "parcela_database")
+                                    ParcelaRoomDatabase.class, "unified_db")
                             .fallbackToDestructiveMigration() // Permite la migración de la base de datos
                             .addCallback(sRoomDatabaseCallback)
                             .build();
+                } else {
+                    inicializaParcelas();
                 }
             }
         }
         return INSTANCE;
     }
-
+    private static void inicializaParcelas(){
+        ParcelaRoomDatabase database = INSTANCE; // Asegúrate de que INSTANCE ya está inicializada
+        if (database != null) {
+            ParcelaDao dao = INSTANCE.parcelaDao();
+            //dao.deleteAll();
+            Parcela parcela1 = new Parcela("Parcela 1 nombre", "Esto es una parcela de ejemplo 1",10,125.5);
+            dao.insert(parcela1);
+            Parcela parcela2 = new Parcela("Parcela 2 nombre", "Esto es una parcela de ejemlo 2", 12, 134.31);
+            dao.insert(parcela2);
+            Parcela parcela3 = new Parcela("Parcela 3 nombre", "Esto es una parcela de ejemlo 3", 33, 1200.56);
+            dao.insert(parcela3);
+        }
+    }
     private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
