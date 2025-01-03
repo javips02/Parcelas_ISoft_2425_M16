@@ -1,17 +1,15 @@
 package es.unizar.eina.parcelapad.database.parcelas;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import es.unizar.eina.reservapad.database.reservas.ReservaRoomDatabase;
 
 @Database(entities = {Parcela.class}, version = 1, exportSchema = false)
 public abstract class ParcelaRoomDatabase extends RoomDatabase {
@@ -57,6 +55,7 @@ public abstract class ParcelaRoomDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
+            Log.d("UnifiedRoomDatabase", "onCreate callback ejecutado");
 
             // If you want to keep data through app restarts,
             // comment out the following block

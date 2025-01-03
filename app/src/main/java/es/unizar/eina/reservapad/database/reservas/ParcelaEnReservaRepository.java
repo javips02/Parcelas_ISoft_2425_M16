@@ -10,6 +10,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import es.unizar.eina.welcome.db.UnifiedRoomDatabase;
+
 /**
  * Clase que gestiona el acceso la fuente de datos.
  * Interacciona con la base de datos a través de las clases ParcelaEnReservaRoomDatabase y ParcelaEnReservaDao.
@@ -23,7 +25,7 @@ public class ParcelaEnReservaRepository {
      * Constructor de ParcelaEnReservaRepository utilizando el contexto de la aplicación para instanciar la base de datos.
      */
     public ParcelaEnReservaRepository(Application application) {
-        ParcelaEnReservaRoomDatabase db = ParcelaEnReservaRoomDatabase.getDatabase(application);
+        UnifiedRoomDatabase db = UnifiedRoomDatabase.getDatabase(application);
         mParcelaEnReservaDao = db.parcelaEnReservaDao();
         mAllParcelasEnReserva = mParcelaEnReservaDao.getPR();
     }

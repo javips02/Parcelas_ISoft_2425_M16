@@ -15,6 +15,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import es.unizar.eina.welcome.db.UnifiedRoomDatabase;
+
 /**
  * Clase que gestiona el acceso la fuente de datos.
  * Interacciona con la base de datos a través de las clases ReservaRoomDatabase y ReservaDao.
@@ -31,7 +33,7 @@ public class ReservaRepository {
         **/
 
         public ReservaRepository(Application application) {
-            ReservaRoomDatabase db = ReservaRoomDatabase.getDatabase(application);
+            UnifiedRoomDatabase db = UnifiedRoomDatabase.getDatabase(application);
             mReservaDao = db.reservaDao();
             mAllReservas = mReservaDao.getAllReservas();
         }

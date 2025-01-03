@@ -12,6 +12,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import es.unizar.eina.welcome.db.UnifiedRoomDatabase;
+
 /**
  * Clase que gestiona el acceso la fuente de datos.
  * Interacciona con la base de datos a través de las clases ParcelaRoomDatabase y ParcelaDao.
@@ -22,7 +24,7 @@ public class ParcelaRepository {
     private final LiveData<List<Parcela>> mAllParcelas;
 
     private final long TIMEOUT = 15000;
-    private final ParcelaRoomDatabase db;
+    private final UnifiedRoomDatabase db;
 
 
     /**
@@ -32,7 +34,7 @@ public class ParcelaRepository {
      * <a href="https://github.com/android/architecture-components-samples/blob/main/BasicSample/app/src/main/java/com/example/android/persistence/DataRepository.java">architecture-components-samples/.../persistence/DataRepository</a>
      */
     public ParcelaRepository(Application application) {
-        this.db = ParcelaRoomDatabase.getDatabase(application); // Guarda la instancia de la base de datos
+        this.db = UnifiedRoomDatabase.getDatabase(application); // Guarda la instancia de la base de datos
         this.mParcelaDao = db.parcelaDao();
         this.mAllParcelas = mParcelaDao.getParcelas();
     }

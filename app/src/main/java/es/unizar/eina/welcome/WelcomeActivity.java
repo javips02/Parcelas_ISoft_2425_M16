@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import es.unizar.eina.notepad.R;
 import es.unizar.eina.parcelapad.ui.parcelas.Parcelapad;
 import es.unizar.eina.reservapad.ui.reservas.Reservapad;
+import es.unizar.eina.welcome.db.UnifiedRoomDatabase;
 
 public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome); // Hace referencia al layout XML que creaste
+
+        UnifiedRoomDatabase database = UnifiedRoomDatabase.getDatabase(getApplicationContext());
 
         // Obtén el botón de Parcelas
         Button parcelasButton = findViewById(R.id.button_parcelas);
