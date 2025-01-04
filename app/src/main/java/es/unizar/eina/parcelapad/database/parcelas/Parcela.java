@@ -5,11 +5,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 /** Clase anotada como entidad que representa una parcela, que consta de un nombre, una
  * descripcion, un numero maximo de ocupantes, y el precio que cuesta reservar esa parcela.
  **/
 @Entity(tableName = "parcela")
-public class Parcela {
+public class Parcela implements Serializable {
     @NonNull
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "nombre")

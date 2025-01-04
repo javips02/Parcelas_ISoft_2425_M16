@@ -15,14 +15,19 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import es.unizar.eina.notepad.R;
+import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 import es.unizar.eina.send.SendAbstractionImpl;
 
 /** Pantalla principal de la aplicación Reservapad */
 public class Reservapad extends AppCompatActivity {
     private ReservaViewModel mReservaViewModel;
+    private ParcelaEnReservaViewModel mParcelaEnReservaViewModel;
     public static final int EDIT_ID = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST+1;
 
@@ -44,6 +49,7 @@ public class Reservapad extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mReservaViewModel = new ViewModelProvider(this).get(ReservaViewModel.class);
+        mParcelaEnReservaViewModel = new ViewModelProvider(this).get(ParcelaEnReservaViewModel.class);
 
         // Creo la instancia para los Send
         senderSMS = new SendAbstractionImpl(this, "SMS");
@@ -173,7 +179,20 @@ public class Reservapad extends AppCompatActivity {
     ActivityResultLauncher<Intent> mStartCreateReserva = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
         public void process(Bundle extras, Reserva reserva) {
-            mReservaViewModel.insert(reserva);
+            long reservaId = mReservaViewModel.insertAndGetId(reserva);
+            ArrayList<ParcelaEnReserva> parcelasAInsertar =
+                    (ArrayList<ParcelaEnReserva>) extras.getSerializable("parcelasAInsertar");
+            ArrayList<ParcelaEnReserva> parcelasAEliminar =
+                    (ArrayList<ParcelaEnReserva>) extras.getSerializable("parcelasAEliminar");
+            //mReservaViewModel.insert(reserva);
+            // Asignar el ID de la reserva a las parcelas
+            if (parcelasAInsertar != null) {
+                for (ParcelaEnReserva parcela : parcelasAInsertar) {
+                    parcela.setReservaID((int) reservaId); // Asegúrate de que el ID de la reserva esté asignado
+                }
+            }
+            manejarParcelas(parcelasAInsertar, parcelasAEliminar);
+
             Toast.makeText(Reservapad.this, "Reserva creada correctamente", Toast.LENGTH_SHORT).show();
         }
     });
@@ -181,12 +200,17 @@ public class Reservapad extends AppCompatActivity {
     ActivityResultLauncher<Intent> mStartUpdateReserva = newActivityResultLauncher(new ExecuteActivityResult() {
         @Override
         public void process(Bundle extras, Reserva reserva) {
+            ArrayList<ParcelaEnReserva> parcelasAInsertar =
+                    (ArrayList<ParcelaEnReserva>) extras.getSerializable("parcelasAInsertar");
+            ArrayList<ParcelaEnReserva> parcelasAEliminar =
+                    (ArrayList<ParcelaEnReserva>) extras.getSerializable("parcelasAEliminar");
             Reserva current = mAdapter.getCurrent();
             int id = current.getID();
             Toast.makeText(getApplicationContext(), "Intento actualizar reserva con ID:" + id, Toast.LENGTH_LONG).show();
             reserva.setID(id);
             Toast.makeText(getApplicationContext(), "Entro a hacer UPDATE", Toast.LENGTH_LONG).show();
             mReservaViewModel.update(reserva);
+            manejarParcelas(parcelasAInsertar, parcelasAEliminar);
         }
     });
 
@@ -206,6 +230,22 @@ public class Reservapad extends AppCompatActivity {
                     }
                 });
     }
+
+    private void manejarParcelas(List<ParcelaEnReserva> parcelasAInsertar,
+                                 List<ParcelaEnReserva> parcelasAEliminar) {
+        if (parcelasAInsertar != null) {
+            for (ParcelaEnReserva parcela : parcelasAInsertar) {
+                mParcelaEnReservaViewModel.insert(parcela);
+            }
+        }
+
+        if (parcelasAEliminar != null) {
+            for (ParcelaEnReserva parcela : parcelasAEliminar) {
+                mParcelaEnReservaViewModel.delete(parcela);
+            }
+        }
+    }
+
 }
 
 interface ExecuteActivityResult {

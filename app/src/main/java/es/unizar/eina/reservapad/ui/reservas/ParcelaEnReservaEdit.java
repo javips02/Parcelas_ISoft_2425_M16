@@ -1,6 +1,7 @@
 package es.unizar.eina.reservapad.ui.reservas;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.unizar.eina.notepad.R;
@@ -26,6 +28,9 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
     private Integer reservaId; // ID de la reserva actual
     private String fechaEntrada; // Fecha de entrada de la reserva
     private String fechaSalida; // Fecha de salida de la reserva
+    private List<Parcela> parcelasAInsertar = new ArrayList<>();
+    private List<Parcela> parcelasAEliminar = new ArrayList<>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,16 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
                 // Las parcelas no disponibles ni en mi reserva se omiten automáticamente
             }
         });
+
+        Button finalizarButton = findViewById(R.id.button_save_add_parcela);
+        finalizarButton.setOnClickListener(v -> {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("parcelasAInsertar", new ArrayList<>(parcelasAInsertar));
+            resultIntent.putExtra("parcelasAEliminar", new ArrayList<>(parcelasAEliminar));
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        });
+
     }
 
     @SuppressLint({"InflateParams", "DefaultLocale"})
@@ -85,13 +100,11 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
 
 
     private void addParcela(Parcela parcela) {
-        ParcelaEnReserva nuevaParcelaEnReserva = new ParcelaEnReserva(
-                parcela.getNombre(),
-                reservaId,
-                parcela.getMaxOcupantes(),
-                parcela.getPrecioParcela()
-        );
-        parcelaEnReservaViewModel.insert(nuevaParcelaEnReserva);
+        parcelasAInsertar.add(parcela);
+
+        if(parcelasAEliminar.contains(parcela)){
+            parcelasAEliminar.remove(parcela);
+        }
 
         // Actualiza la lista tras la operación
         actualizarListaParcelas();
@@ -104,7 +117,11 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
                 parcela.getMaxOcupantes(),
                 parcela.getPrecioParcela()
         );
-        parcelaEnReservaViewModel.delete(parcelaEnReserva);
+        parcelasAEliminar.add(parcela);
+
+        if(parcelasAInsertar.contains(parcela)){
+            parcelasAInsertar.remove(parcela);
+        }
 
         // Actualiza la lista tras la operación
         actualizarListaParcelas();
@@ -114,9 +131,9 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
         parcelaViewModel.getAllParcelas().observe(this, parcelas -> {
             listaParcelasContainer.removeAllViews(); // Limpia el contenedor antes de agregar nuevas vistas
             for (Parcela parcela : parcelas) {
-                if (parcelaEnReservaViewModel.isParcelaInReserva(parcela.getNombre(), reservaId)) {
+                if (parcelasAInsertar.contains(parcela)) {
                     addParcelaView(parcela, true, false); // Ya está en mi reserva
-                } else if (!parcelaEnReservaViewModel.isParcelaYSolapa(parcela.getNombre(), fechaEntrada, fechaSalida)) {
+                } else if (parcelasAEliminar.contains(parcela)) {
                     addParcelaView(parcela, false, true); // Disponible
                 }
             }

@@ -6,6 +6,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 
+import java.io.Serializable;
+
 /**
  * Clase anotada como entidad que representa una relación entre una parcela y una reserva.
  * Incluye los ocupantes de la reserva en esa parcela.
@@ -32,7 +34,7 @@ import androidx.room.Index;
                 @Index("reservaID")
         }
 )
-public class ParcelaEnReserva {
+public class ParcelaEnReserva implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "parcelaNombre")

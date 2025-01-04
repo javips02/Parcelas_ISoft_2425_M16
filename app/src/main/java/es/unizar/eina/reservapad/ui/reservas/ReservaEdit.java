@@ -1,5 +1,7 @@
 package es.unizar.eina.reservapad.ui.reservas;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,11 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import es.unizar.eina.notepad.R;
 import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
+import es.unizar.eina.parcelapad.database.parcelas.Parcela;
 
 
 
@@ -44,6 +48,11 @@ public class ReservaEdit extends AppCompatActivity {
 
     private ParcelaEnReservaViewModel mParcelaEnReservaViewModel;
     private LinearLayout listaParcelasContainer;
+
+    private List<ParcelaEnReserva> parcelasAInsertar = new ArrayList<>();
+    private List<ParcelaEnReserva> parcelasAEliminar = new ArrayList<>();
+
+    private ActivityResultLauncher<Intent> parcelaResultLauncher;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,42 +82,101 @@ public class ReservaEdit extends AppCompatActivity {
                 replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, Integer.parseInt(mTlfCliente.getText().toString()));
                 replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, mFEntrada.getText().toString());
                 replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, mFSalida.getText().toString());
+                replyIntent.putExtra("parcelasAInsertar", new ArrayList<>(parcelasAInsertar));
+                replyIntent.putExtra("parcelasAEliminar", new ArrayList<>(parcelasAEliminar));
 
                 setResult(RESULT_OK, replyIntent);
                 finish();
             }
+
         });
+
+        // Inicializar el launcher para manejar resultados
+        parcelaResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        Intent data = result.getData();
+                        if (data != null) {
+                            // Recuperar listas desde el resultado
+                            List<Parcela> nuevasParcelasAInsertar =
+                                    (List<Parcela>) data.getSerializableExtra("parcelasAInsertar");
+                            List<Parcela> nuevasParcelasAEliminar =
+                                    (List<Parcela>) data.getSerializableExtra("parcelasAEliminar");
+
+                            if (nuevasParcelasAInsertar != null) {
+                                for (Parcela parcela : nuevasParcelasAInsertar) {
+                                    ParcelaEnReserva parcelaEnReserva = new ParcelaEnReserva(
+                                            parcela.getNombre(),
+                                            reservaId,
+                                            parcela.getMaxOcupantes(),
+                                            parcela.getPrecioParcela()
+                                    );
+                                    parcelasAInsertar.add(parcelaEnReserva);
+                                }
+                            }
+
+                            if (nuevasParcelasAEliminar != null) {
+                                for (Parcela parcela : nuevasParcelasAEliminar) {
+                                    ParcelaEnReserva parcelaEnReserva = new ParcelaEnReserva(
+                                            parcela.getNombre(),
+                                            reservaId,
+                                            parcela.getMaxOcupantes(),
+                                            parcela.getPrecioParcela()
+                                    );
+                                    parcelasAEliminar.add(parcelaEnReserva);
+                                }
+                            }
+
+                            // Actualiza la vista de parcelas si es necesario
+                            actualizarListaParcelas(parcelasAInsertar);
+                        }
+                    }
+                }
+        );
 
         //Creo listener para el botón de añadir parcela para que me lleve a la actividad de añadir parcela
         mAddParcelaButton = findViewById(R.id.button_add_parcela);
         mAddParcelaButton.setOnClickListener(view -> {
             Intent intent = new Intent(ReservaEdit.this, ParcelaEnReservaEdit.class);
             intent.putExtra("reservaId", reservaId);
-            startActivity(intent);
+            parcelaResultLauncher.launch(intent);
         });
 
         populateFields();
     }
 
     private void actualizarListaParcelas(List<ParcelaEnReserva> parcelas) {
-        // Limpiar el contenedor antes de agregar nuevos elementos
-        listaParcelasContainer.removeAllViews();
+        listaParcelasContainer.removeAllViews(); // Limpiar el contenedor antes de agregar nuevos elementos
 
-        // Inflar dinámicamente cada parcela
         LayoutInflater inflater = LayoutInflater.from(this);
         for (ParcelaEnReserva parcela : parcelas) {
+            // Verificar si la parcela está en la lista de eliminaciones
+            if (!parcelasAEliminar.contains(parcela)) {
+                // Inflar la vista solo si no está marcada para eliminación
+                View parcelaView = inflater.inflate(R.layout.parcela_de_reserva, listaParcelasContainer, false);
+
+                // Configurar los datos de la parcela
+                TextView nombreParcela = parcelaView.findViewById(R.id.nombreParcela);
+                TextView numeroOcupantes = parcelaView.findViewById(R.id.numeroOcupantes);
+                TextView precioParcela = parcelaView.findViewById(R.id.precioParcela);
+
+                nombreParcela.setText(parcela.getParcelaNombre());
+                numeroOcupantes.setText(String.valueOf(parcela.getOcupantes()));
+                precioParcela.setText(String.format("€%.2f", parcela.getPrecio()));
+
+                // Agregar la vista inflada al contenedor
+                listaParcelasContainer.addView(parcelaView);
+            }
+        }
+
+        // Mostrar también las parcelas en la lista de inserciones
+        for (ParcelaEnReserva parcela : parcelasAInsertar) {
             View parcelaView = inflater.inflate(R.layout.parcela_de_reserva, listaParcelasContainer, false);
-
-            // Configurar los datos de la parcela
             TextView nombreParcela = parcelaView.findViewById(R.id.nombreParcela);
-            TextView numeroOcupantes = parcelaView.findViewById(R.id.numeroOcupantes);
-            TextView precioParcela = parcelaView.findViewById(R.id.precioParcela);
-
             nombreParcela.setText(parcela.getParcelaNombre());
-            numeroOcupantes.setText(String.valueOf(parcela.getOcupantes()));
-            precioParcela.setText(String.format("€%.2f", parcela.getPrecio()));
 
-            // Agregar la vista inflada al contenedor
+            // Mostrar solo el nombre de la parcela si está en la lista de inserciones
             listaParcelasContainer.addView(parcelaView);
         }
     }
