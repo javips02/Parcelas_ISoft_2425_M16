@@ -179,5 +179,9 @@ public class ParcelaEnReservaRepository {
         }
     }
 
+    public LiveData<List<ParcelaEnReserva>> getParcelasByReserva(int reservaId) {
+        return mParcelaEnReservaDao.getParcelasByReserva(reservaId);
+    }
+
 
 }

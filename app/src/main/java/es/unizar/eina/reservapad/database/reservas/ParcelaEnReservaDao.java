@@ -45,6 +45,10 @@ public interface ParcelaEnReservaDao {
             "AND ((reserva.fechaEntrada <= :fechaSalida AND reserva.fechaSalida >= :fechaEntrada))")
     boolean isParcelaYSolapa(String nombreParcela, String fechaEntrada, String fechaSalida);
 
+    @Query("SELECT * FROM parcela_en_reserva WHERE reservaID = :reservaId")
+    LiveData<List<ParcelaEnReserva>> getParcelasByReserva(int reservaId);
+
+
 
 
 }

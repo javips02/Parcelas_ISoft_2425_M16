@@ -52,4 +52,8 @@ public class ParcelaEnReservaViewModel extends AndroidViewModel {
         return mRepository.isParcelaYSolapa(nombreParcela, fechaEntrada, fechaSalida);
     }
 
+    public LiveData<List<ParcelaEnReserva>> getParcelasByReserva(int reservaId) {
+        return mRepository.getParcelasByReserva(reservaId);
+    }
+
 }

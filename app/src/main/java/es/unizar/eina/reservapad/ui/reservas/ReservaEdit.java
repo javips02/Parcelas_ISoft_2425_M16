@@ -61,7 +61,7 @@ public class ReservaEdit extends AppCompatActivity {
         mParcelaEnReservaViewModel = new ViewModelProvider(this).get(ParcelaEnReservaViewModel.class);
 
         // Observar la lista de parcelas en reserva
-        mParcelaEnReservaViewModel.getAllParcelasEnReserva().observe(this, this::actualizarListaParcelas);
+        mParcelaEnReservaViewModel.getParcelasByReserva(reservaId).observe(this, this::actualizarListaParcelas);
 
 
         mSaveReservaButton = findViewById(R.id.button_save_reserva);
