@@ -40,4 +40,6 @@
     <string name="lista_parcelas_todas">Lista de todas las parcelas disponibles para añadir a su reserva:</string>
     <string name="estado_disponible">+</string>
     <string name="estado_no_disponible">-</string>
+    <string name="precio_total">Precio Total:</string>
+    <string name="hint_precio">0</string>
 </resources>

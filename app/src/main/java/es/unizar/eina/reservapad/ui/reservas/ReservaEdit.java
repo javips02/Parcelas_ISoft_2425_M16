@@ -42,6 +42,8 @@ public class ReservaEdit extends AppCompatActivity {
     private EditText mTlfCliente;
     private EditText mFEntrada;
     private EditText mFSalida;
+
+    private TextView precioTotal;
     private int reservaId;
 
     Button mSaveReservaButton;
@@ -66,6 +68,7 @@ public class ReservaEdit extends AppCompatActivity {
         mFEntrada = findViewById(R.id.fecha_entrada);
         mFSalida = findViewById(R.id.fecha_salida);
         listaParcelasContainer = findViewById(R.id.listaParcelasContainer);
+        precioTotal = findViewById(R.id.precio_total);
         reservaId = getIntent().getIntExtra(RESERVA_ID, -1); // Recupera correctamente
 
         // Inicializar ViewModel
@@ -153,25 +156,53 @@ public class ReservaEdit extends AppCompatActivity {
         //Creo listener para el botón de añadir parcela para que me lleve a la actividad de añadir parcela
         mAddParcelaButton = findViewById(R.id.button_add_parcela);
         mAddParcelaButton.setOnClickListener(view -> {
-            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // Validar campos antes de proceder a añadir una parcela
+            if (validateFields()) {
+                DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-            String fechaEntradaOriginal = mFEntrada.getText().toString();
-            String fechaSalidaOriginal = mFSalida.getText().toString();
+                String fechaEntradaOriginal = mFEntrada.getText().toString();
+                String fechaSalidaOriginal = mFSalida.getText().toString();
 
-            String fechaEntradaFormatted = LocalDate.parse(fechaEntradaOriginal, inputFormatter)
-                    .format(outputFormatter);
-            String fechaSalidaFormatted = LocalDate.parse(fechaSalidaOriginal, inputFormatter)
-                    .format(outputFormatter);
+                String fechaEntradaFormatted = LocalDate.parse(fechaEntradaOriginal, inputFormatter)
+                        .format(outputFormatter);
+                String fechaSalidaFormatted = LocalDate.parse(fechaSalidaOriginal, inputFormatter)
+                        .format(outputFormatter);
 
-            Intent intent = new Intent(ReservaEdit.this, ParcelaEnReservaEdit.class);
-            intent.putExtra("reservaId", reservaId);
-            intent.putExtra("fecha_entrada", fechaEntradaFormatted);
-            intent.putExtra("fecha_salida", fechaSalidaFormatted);
-            parcelaResultLauncher.launch(intent);
+                Intent intent = new Intent(ReservaEdit.this, ParcelaEnReservaEdit.class);
+                intent.putExtra("reservaId", reservaId);
+                intent.putExtra("fecha_entrada", fechaEntradaFormatted);
+                intent.putExtra("fecha_salida", fechaSalidaFormatted);
+                parcelaResultLauncher.launch(intent);
+            } else {
+                // Mostrar un mensaje al usuario indicando que los campos no son válidos
+                Toast.makeText(this, "Por favor, completa todos los campos correctamente antes de añadir una parcela.", Toast.LENGTH_LONG).show();
+            }
         });
 
+
         populateFields();
+    }
+
+    private void actualizarPrecioTotal(List<ParcelaEnReserva> parcelasReserva) {
+        double total = 0.0;
+
+        // Sumar precios de parcelas asociadas a la reserva (menos las eliminadas)
+        if (parcelasReserva != null) {
+            for (ParcelaEnReserva parcela : parcelasReserva) {
+                if (!parcelasAEliminar.contains(parcela)) {
+                    total += parcela.getPrecio();
+                }
+            }
+        }
+
+        // Sumar precios de parcelas a insertar
+        for (ParcelaEnReserva parcela : parcelasAInsertar) {
+            total += parcela.getPrecio();
+        }
+
+        // Actualizar el campo de precio total
+        precioTotal.setText(String.format(Locale.getDefault(), "€%.2f", total));
     }
 
     private void actualizarListaParcelas(List<ParcelaEnReserva> parcelas) {
@@ -197,6 +228,8 @@ public class ReservaEdit extends AppCompatActivity {
                 listaParcelasContainer.addView(parcelaView);
             }
         }
+
+        actualizarPrecioTotal(parcelas);
     }
 
 
