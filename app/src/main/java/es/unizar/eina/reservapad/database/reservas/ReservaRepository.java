@@ -138,4 +138,12 @@ public class ReservaRepository {
     public LiveData<List<Reserva>> getAllReservasByFEntrada() {
         return mReservaDao.getOrderedReservasByFEntrada();
     }
+
+    /** Devuelve la reserva con el ID dado
+     * @param ID El ID de la reserva
+     * @return La reserva con el ID dado
+     */
+    public Reserva getReservaByID(int ID) {
+        return mReservaDao.getReservaByID(ID);
+    }
 }

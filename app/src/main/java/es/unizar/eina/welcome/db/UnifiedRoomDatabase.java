@@ -68,8 +68,8 @@ public abstract class UnifiedRoomDatabase extends RoomDatabase {
                     // Inserta datos de la tabla "Reservas"
                     ReservaDao reservaDao = database.reservaDao();
                     reservaDao.deleteAll(); // Limpia tabla
-                    reservaDao.insert(new Reserva("Juan Luis Gonzalez", 676686696, "7/11/2023", "8/11/2023"));
-                    reservaDao.insert(new Reserva("Maria Perez", 676686697, "9/11/2023", "10/11/2023"));
+                    reservaDao.insert(new Reserva("Juan Luis Gonzalez", 676686696, "07/11/2023", "08/11/2023"));
+                    reservaDao.insert(new Reserva("Maria Perez", 676686697, "09/11/2023", "10/11/2023"));
                     reservaDao.insert(new Reserva("Pedro Martinez", 676686698, "11/11/2023", "12/11/2023"));
 
                     // Inserta datos de la tabla "ParcelasEnReserva"

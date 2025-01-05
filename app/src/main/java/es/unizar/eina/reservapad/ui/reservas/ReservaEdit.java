@@ -128,8 +128,9 @@ public class ReservaEdit extends AppCompatActivity {
                                 }
                             }
 
+                            mParcelaEnReservaViewModel.getParcelasByReserva(reservaId).observe(this, this::actualizarListaParcelas);
                             // Actualiza la vista de parcelas si es necesario
-                            actualizarListaParcelas(parcelasAInsertar);
+                            actualizarListaParcelasInsertar(parcelasAInsertar);
                         }
                     }
                 }
@@ -147,7 +148,7 @@ public class ReservaEdit extends AppCompatActivity {
     }
 
     private void actualizarListaParcelas(List<ParcelaEnReserva> parcelas) {
-        listaParcelasContainer.removeAllViews(); // Limpiar el contenedor antes de agregar nuevos elementos
+        //listaParcelasContainer.removeAllViews(); // Limpiar el contenedor antes de agregar nuevos elementos
 
         LayoutInflater inflater = LayoutInflater.from(this);
         for (ParcelaEnReserva parcela : parcelas) {
@@ -169,16 +170,30 @@ public class ReservaEdit extends AppCompatActivity {
                 listaParcelasContainer.addView(parcelaView);
             }
         }
+    }
 
+
+    private void actualizarListaParcelasInsertar(List<ParcelaEnReserva> parcelasAInsertar) {
+        Toast.makeText(this, "Actualizando lista de parcelas...", Toast.LENGTH_SHORT).show();
+        listaParcelasContainer.removeAllViews();
+        List<ParcelaEnReserva> parcelas = mParcelaEnReservaViewModel.getParcelasByReserva(reservaId).getValue();
+        LayoutInflater inflater = LayoutInflater.from(this);
         // Mostrar también las parcelas en la lista de inserciones
         for (ParcelaEnReserva parcela : parcelasAInsertar) {
             View parcelaView = inflater.inflate(R.layout.parcela_de_reserva, listaParcelasContainer, false);
+
             TextView nombreParcela = parcelaView.findViewById(R.id.nombreParcela);
+            TextView numeroOcupantes = parcelaView.findViewById(R.id.numeroOcupantes);
+            TextView precioParcela = parcelaView.findViewById(R.id.precioParcela);
+
             nombreParcela.setText(parcela.getParcelaNombre());
+            numeroOcupantes.setText(String.valueOf(parcela.getOcupantes()));
+            precioParcela.setText(String.format("€%.2f", parcela.getPrecio()));
 
             // Mostrar solo el nombre de la parcela si está en la lista de inserciones
             listaParcelasContainer.addView(parcelaView);
         }
+
     }
 
 

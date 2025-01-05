@@ -46,4 +46,8 @@ public class ReservaViewModel extends AndroidViewModel {
 
     public void update(Reserva reserva) { mRepository.update(reserva); }
     public void delete(Reserva reserva) { mRepository.delete(reserva); }
+
+    public Reserva getReservaByID(int ID) {
+        return mRepository.getReservaByID(ID);
+    }
 }

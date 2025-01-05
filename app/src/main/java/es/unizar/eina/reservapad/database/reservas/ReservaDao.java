@@ -36,4 +36,8 @@ public interface ReservaDao {
 
     @Query("SELECT * FROM reserva ORDER BY fechaEntrada ASC")
     LiveData<List<Reserva>> getOrderedReservasByFEntrada();
+
+    // Devuelve la reserva con el ID dado
+    @Query("SELECT * FROM reserva WHERE ID = :ID")
+    Reserva getReservaByID(int ID);
 }

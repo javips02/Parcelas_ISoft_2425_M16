@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
@@ -49,6 +51,11 @@ public class ParcelaEnReservaViewModel extends AndroidViewModel {
      * @return true si la parcela está en una reserva que se solape con tus fechas; false en caso contrario.
      */
     public boolean isParcelaYSolapa(String nombreParcela, String fechaEntrada, String fechaSalida) {
+//        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        DateTimeFormatter dbFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//        String fechaEntradaFormatted = LocalDate.parse(fechaEntrada, inputFormatter).format(dbFormatter);
+//        String fechaSalidaFormatted = LocalDate.parse(fechaSalida, inputFormatter).format(dbFormatter);
         return mRepository.isParcelaYSolapa(nombreParcela, fechaEntrada, fechaSalida);
     }
 

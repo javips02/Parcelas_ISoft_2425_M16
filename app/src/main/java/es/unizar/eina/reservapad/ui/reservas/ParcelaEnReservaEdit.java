@@ -102,26 +102,16 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
     private void addParcela(Parcela parcela) {
         parcelasAInsertar.add(parcela);
 
-        if(parcelasAEliminar.contains(parcela)){
-            parcelasAEliminar.remove(parcela);
-        }
+        parcelasAEliminar.remove(parcela);
 
         // Actualiza la lista tras la operación
         actualizarListaParcelas();
     }
 
     private void removeParcela(Parcela parcela) {
-        ParcelaEnReserva parcelaEnReserva = new ParcelaEnReserva(
-                parcela.getNombre(),
-                reservaId,
-                parcela.getMaxOcupantes(),
-                parcela.getPrecioParcela()
-        );
         parcelasAEliminar.add(parcela);
 
-        if(parcelasAInsertar.contains(parcela)){
-            parcelasAInsertar.remove(parcela);
-        }
+        parcelasAInsertar.remove(parcela);
 
         // Actualiza la lista tras la operación
         actualizarListaParcelas();
@@ -133,7 +123,11 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
             for (Parcela parcela : parcelas) {
                 if (parcelasAInsertar.contains(parcela)) {
                     addParcelaView(parcela, true, false); // Ya está en mi reserva
-                } else if (parcelasAEliminar.contains(parcela)) {
+                } else if(parcelasAEliminar.contains(parcela)){
+                    addParcelaView(parcela, false, true); // Disponible
+                } else if(parcelaEnReservaViewModel.isParcelaInReserva(parcela.getNombre(), reservaId)){
+                    addParcelaView(parcela, true, false); // Ya está en mi reserva
+                } else if (!parcelaEnReservaViewModel.isParcelaYSolapa(parcela.getNombre(), fechaEntrada, fechaSalida)) {
                     addParcelaView(parcela, false, true); // Disponible
                 }
             }
