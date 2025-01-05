@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,11 +79,23 @@ public class ReservaEdit extends AppCompatActivity {
         mSaveReservaButton.setOnClickListener(view -> {
             // Validar campos antes de guardar
             if (validateFields()) {
+
+                DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                String fechaEntradaOriginal = mFEntrada.getText().toString();
+                String fechaSalidaOriginal = mFSalida.getText().toString();
+
+                String fechaEntradaFormatted = LocalDate.parse(fechaEntradaOriginal, inputFormatter)
+                        .format(outputFormatter);
+                String fechaSalidaFormatted = LocalDate.parse(fechaSalidaOriginal, inputFormatter)
+                        .format(outputFormatter);
+
                 Intent replyIntent = new Intent();
                 replyIntent.putExtra(ReservaEdit.NOMBRE_CLIENTE, mNombreCliente.getText().toString());
                 replyIntent.putExtra(ReservaEdit.TLF_CLIENTE, Integer.parseInt(mTlfCliente.getText().toString()));
-                replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, mFEntrada.getText().toString());
-                replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, mFSalida.getText().toString());
+                replyIntent.putExtra(ReservaEdit.FECHA_ENTRADA, fechaEntradaFormatted);
+                replyIntent.putExtra(ReservaEdit.FECHA_SALIDA, fechaSalidaFormatted);
                 replyIntent.putExtra("parcelasAInsertar", new ArrayList<>(parcelasAInsertar));
                 replyIntent.putExtra("parcelasAEliminar", new ArrayList<>(parcelasAEliminar));
 
@@ -139,8 +153,21 @@ public class ReservaEdit extends AppCompatActivity {
         //Creo listener para el botón de añadir parcela para que me lleve a la actividad de añadir parcela
         mAddParcelaButton = findViewById(R.id.button_add_parcela);
         mAddParcelaButton.setOnClickListener(view -> {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            String fechaEntradaOriginal = mFEntrada.getText().toString();
+            String fechaSalidaOriginal = mFSalida.getText().toString();
+
+            String fechaEntradaFormatted = LocalDate.parse(fechaEntradaOriginal, inputFormatter)
+                    .format(outputFormatter);
+            String fechaSalidaFormatted = LocalDate.parse(fechaSalidaOriginal, inputFormatter)
+                    .format(outputFormatter);
+
             Intent intent = new Intent(ReservaEdit.this, ParcelaEnReservaEdit.class);
             intent.putExtra("reservaId", reservaId);
+            intent.putExtra("fecha_entrada", fechaEntradaFormatted);
+            intent.putExtra("fecha_salida", fechaSalidaFormatted);
             parcelaResultLauncher.launch(intent);
         });
 
@@ -197,13 +224,27 @@ public class ReservaEdit extends AppCompatActivity {
     }
 
 
-    private void populateFields () {
+    private void populateFields() {
         Bundle extras = getIntent().getExtras();
-        if (extras!=null) {
+        if (extras != null) {
             mNombreCliente.setText(extras.getString(ReservaEdit.NOMBRE_CLIENTE));
             mTlfCliente.setText(String.valueOf(extras.getInt(ReservaEdit.TLF_CLIENTE, 000000000)));
-            mFEntrada.setText(String.valueOf(extras.getString(ReservaEdit.FECHA_ENTRADA, "01/01/2000"))); //REVISAR
-            mFSalida.setText(String.valueOf(extras.getString(ReservaEdit.FECHA_SALIDA, "02/01/2000"))); //REVISAR
+
+            // Formateadores para las fechas
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            // Convertir fecha de entrada
+            String fechaEntradaOriginal = extras.getString(ReservaEdit.FECHA_ENTRADA, "2000-01-01");
+            String fechaEntradaFormatted = LocalDate.parse(fechaEntradaOriginal, inputFormatter)
+                    .format(outputFormatter);
+            mFEntrada.setText(fechaEntradaFormatted);
+
+            // Convertir fecha de salida
+            String fechaSalidaOriginal = extras.getString(ReservaEdit.FECHA_SALIDA, "2000-01-02");
+            String fechaSalidaFormatted = LocalDate.parse(fechaSalidaOriginal, inputFormatter)
+                    .format(outputFormatter);
+            mFSalida.setText(fechaSalidaFormatted);
         }
     }
 

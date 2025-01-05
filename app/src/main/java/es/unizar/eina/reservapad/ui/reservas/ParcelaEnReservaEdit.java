@@ -43,8 +43,8 @@ public class ParcelaEnReservaEdit extends AppCompatActivity {
 
         // Obtén los datos de la reserva desde el Intent o ViewModel
         reservaId = getIntent().getIntExtra("reservaId", -1);
-        fechaEntrada = getIntent().getStringExtra("fechaEntrada");
-        fechaSalida = getIntent().getStringExtra("fechaSalida");
+        fechaEntrada = getIntent().getStringExtra("fecha_entrada");
+        fechaSalida = getIntent().getStringExtra("fecha_salida");
 
         // Obtén todas las parcelas y aplica el filtro
         parcelaViewModel.getAllParcelas().observe(this, parcelas -> {
