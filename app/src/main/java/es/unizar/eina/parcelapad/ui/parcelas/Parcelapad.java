@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 import es.unizar.eina.parcelapad.database.parcelas.Parcela;
 
 import java.util.Objects;

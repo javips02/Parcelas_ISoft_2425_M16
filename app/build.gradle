@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'es.unizar.eina.notepad'
+    namespace 'es.unizar.eina.parcelapad'
     compileSdk 34
 
     defaultConfig {
-        applicationId "es.unizar.eina.notepad"
+        applicationId "es.unizar.eina.parcelapad"
         minSdk 26
         targetSdk 34
         versionCode 1

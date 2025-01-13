@@ -7,18 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 import es.unizar.eina.parcelapad.ui.parcelas.ParcelaViewModel;
-import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
 import es.unizar.eina.parcelapad.database.parcelas.Parcela;
-import es.unizar.eina.reservapad.ui.reservas.ParcelaEnReservaViewModel;
 
 public class ParcelaEnReservaEdit extends AppCompatActivity {
 

@@ -2,11 +2,9 @@ package es.unizar.eina.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 import es.unizar.eina.parcelapad.ui.parcelas.Parcelapad;
 import es.unizar.eina.reservapad.ui.reservas.Reservapad;
 import es.unizar.eina.welcome.db.UnifiedRoomDatabase;

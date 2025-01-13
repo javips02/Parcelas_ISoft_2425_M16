@@ -1,16 +1,11 @@
 package es.unizar.eina.parcelapad.ui.parcelas;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 
 
 class ParcelaViewHolder extends RecyclerView.ViewHolder {

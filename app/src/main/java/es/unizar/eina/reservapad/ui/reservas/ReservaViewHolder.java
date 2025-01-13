@@ -4,10 +4,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import es.unizar.eina.parcelapad.R;
 import androidx.recyclerview.widget.RecyclerView;
-
-import es.unizar.eina.notepad.R;
 
 
 class ReservaViewHolder extends RecyclerView.ViewHolder {

@@ -19,7 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
 import es.unizar.eina.reservapad.database.reservas.Reserva;
 import es.unizar.eina.send.SendAbstractionImpl;

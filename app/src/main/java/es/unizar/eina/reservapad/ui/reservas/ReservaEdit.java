@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import es.unizar.eina.notepad.R;
+import es.unizar.eina.parcelapad.R;
 import es.unizar.eina.reservapad.database.reservas.ParcelaEnReserva;
 import es.unizar.eina.parcelapad.database.parcelas.Parcela;
 
