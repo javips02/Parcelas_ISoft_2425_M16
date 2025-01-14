@@ -87,6 +87,19 @@ public class ParcelaRepository {
          * (databaseWriteExecutor.submit). Para poder sincronizar la recuperación del resultado
          * devuelto por la base de datos, se puede utilizar un Future.
          */
+
+        // Validar que el nombre no sea nulo ni vacío
+        if (parcela.getNombre().trim().isEmpty()) {
+            Log.d("ParcelaRepository", "El nombre no puede ser nulo ni vacío");
+            return -1;
+        } else if (parcela.getMaxOcupantes() < 0){
+            Log.d("ParcelaRepository", "MaxOcupantes no puede ser negativo");
+            return -1;
+        }  else if (parcela.getPrecioParcela() <= 0.00){
+        Log.d("ParcelaRepository", "El precio de la parcela no puede ser cero ni negativo");
+        return -1;
+    }
+
         Future<Long> future = ParcelaRoomDatabase.databaseWriteExecutor.submit(
                 () -> mParcelaDao.insert(parcela));
         try {
