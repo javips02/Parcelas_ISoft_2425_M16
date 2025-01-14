@@ -3,13 +3,21 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+<<<<<<< Updated upstream
         <entry key="-1967214870">
+=======
+        <entry key="-2136947200">
+>>>>>>> Stashed changes
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+<<<<<<< Updated upstream
                   <entry key="Pixel_8_API_29_Android_10_" value="120" />
+=======
+                  <entry key="Medium_Phone_API_35" value="120" />
+>>>>>>> Stashed changes
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -55,13 +63,21 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+<<<<<<< Updated upstream
         <entry key="-1571922490">
+=======
+        <entry key="-1626709312">
+>>>>>>> Stashed changes
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+<<<<<<< Updated upstream
                   <entry key="Pixel_8_API_29_Android_10_" value="120" />
+=======
+                  <entry key="Medium_Phone_API_35" value="120" />
+>>>>>>> Stashed changes
                   <entry key="Tests" value="360" />
                 </map>
               </option>
@@ -81,12 +97,17 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+<<<<<<< Updated upstream
         <entry key="-904465540">
+=======
+        <entry key="-899908704">
+>>>>>>> Stashed changes
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+<<<<<<< Updated upstream
                   <entry key="Pixel_8_API_29_Android_10_" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
@@ -101,6 +122,10 @@
                 <map>
                   <entry key="Duration" value="90" />
                   <entry key="Pixel_8_API_29_Android_10_" value="120" />
+=======
+                  <entry key="Medium_Phone_API_35" value="120" />
+                  <entry key="Pixel_9_API_35" value="120" />
+>>>>>>> Stashed changes
                   <entry key="Tests" value="360" />
                 </map>
               </option>
