@@ -17,7 +17,7 @@ import es.unizar.eina.reservapad.database.reservas.ReservaRepository;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnit4.class)
-public class ExampleUnitTest {
+public class VolumenYSobrecargaTests {
 
     private ParcelaRepository parcelaRepository;
     private ReservaRepository reservaRepository;
