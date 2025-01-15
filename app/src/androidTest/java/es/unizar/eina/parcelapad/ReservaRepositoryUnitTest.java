@@ -176,8 +176,41 @@ public class ReservaRepositoryUnitTest {
         assertEquals("Una fecha de salida nula debería devolver -1", -1, result);
     }
 
-
     /*
      *  TESTS DE BORRADO
      */
+// Caso válido: Eliminación exitosa
+    @Test
+    public void testDelete_ValidReserva() {
+        Reserva reserva = new Reserva("Cliente A", 123456789, "2025-01-01", "2025-01-10");
+        reservaRepository.insert(reserva);
+
+        int result = reservaRepository.delete(reserva);
+        assertEquals("Se espera que se elimine una fila", 0, result);
+    }
+
+    // Caso inválido: Nombre nulo
+    @Test
+    public void testDelete_NullNombreCliente() {
+        Reserva reserva = new Reserva(null, 123456789, "2025-01-01", "2025-01-10");
+        int result = reservaRepository.delete(reserva);
+        assertEquals("Un nombre nulo debería devolver -1", -1, result);
+    }
+
+    // Caso inválido: Nombre vacío
+    @Test
+    public void testDelete_EmptyNombreCliente() {
+        Reserva reserva = new Reserva("", 123456789, "2025-01-01", "2025-01-10");
+        int result = reservaRepository.delete(reserva);
+        assertEquals("Un nombre vacío debería devolver -1", -1, result);
+    }
+
+    // Caso inválido: Reserva no existente
+    @Test
+    public void testDelete_NonExistentReserva() {
+        Reserva reserva = new Reserva("NoExiste", 123456789, "2025-01-01", "2025-01-10");
+        int result = reservaRepository.delete(reserva);
+        assertEquals("Se espera que no se elimine ninguna fila", 0, result);
+    }
+
 }

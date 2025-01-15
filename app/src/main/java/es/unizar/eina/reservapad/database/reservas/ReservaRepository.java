@@ -137,6 +137,15 @@ public class ReservaRepository {
      *          En caso contrario, devuelve -1 para indicar el fallo.
      */
     public int delete(Reserva reserva) {
+        // Comprobaciones previas al borrado de una reserva
+        if(reserva.getNombreCliente() == null){
+            Log.d("ReservaRepository", "El nombre de una reserva nod ebe ser nulo");
+            return -1;
+        } else if (reserva.getNombreCliente().isEmpty()){
+            Log.d("ReservaRepository", "El nombre de una reserva nod ebe ser vacío");
+            return -1;
+        }
+
         Future<Integer> future = ReservaRoomDatabase.databaseWriteExecutor.submit(() ->
                 mReservaDao.delete(reserva)
         );
