@@ -88,7 +88,7 @@ public class ParcelaRepository {
          * devuelto por la base de datos, se puede utilizar un Future.
          */
 
-        // Validar que el nombre no sea nulo ni vacío
+        // COmprobaciones previas a una inserción
         if (parcela.getNombre().trim().isEmpty()) {
             Log.d("ParcelaRepository", "El nombre no puede ser nulo ni vacío");
             return -1;
@@ -121,6 +121,17 @@ public class ParcelaRepository {
      *         con los atributos.
      */
     public int update(Parcela parcela) {
+        // OCmprobaciones previas a update
+        if (parcela.getNombre() == null || parcela.getNombre().trim().isEmpty()) {
+            Log.d("ParcelaRepository", "El nombre no puede ser nulo ni vacío");
+            return -1;
+        } else if (parcela.getMaxOcupantes() < 0){
+            Log.d("ParcelaRepository", "MaxOcupantes no puede ser negativo");
+            return -1;
+        }  else if (parcela.getPrecioParcela() <= 0.00){
+            Log.d("ParcelaRepository", "El precio de la parcela no puede ser cero ni negativo");
+            return -1;
+        }
         Future<Integer> future = ParcelaRoomDatabase.databaseWriteExecutor.submit(
                 () -> mParcelaDao.update(parcela));
         try {
