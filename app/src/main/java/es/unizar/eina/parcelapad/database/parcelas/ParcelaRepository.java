@@ -151,6 +151,12 @@ public class ParcelaRepository {
      *         un valor aceptable.
      */
     public int delete(Parcela parcela) {
+        // Comprobaciones antes de borrar algo en la BD
+        if (parcela.getNombre().trim().isEmpty()) {
+            Log.d("ParcelaRepository", "El nombre no puede ser nulo ni vacío");
+            return -1;
+        }
+
         Future<Integer> future = ParcelaRoomDatabase.databaseWriteExecutor.submit(
                 () -> mParcelaDao.delete(parcela));
         try {

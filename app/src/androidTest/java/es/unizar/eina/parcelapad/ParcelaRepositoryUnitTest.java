@@ -147,4 +147,44 @@ public class ParcelaRepositoryUnitTest {
         int result = parcelaRepository.update(updatedParcela);
         assertEquals("Precio negativo debería devolver -1", -1, result);
     }
+
+    /* **********************
+     * PRUEBAS METHOD DELETE
+     * **********************
+     */
+
+    // Caso válido: Eliminación exitosa
+    @Test
+    public void testDelete_ValidParcela() {
+        Parcela parcela = new Parcela("Parcela A", "Descripción", 5, 100.00);
+        parcelaRepository.insert(parcela);
+
+        int result = parcelaRepository.delete(parcela);
+        assertEquals("Se espera que se elimine una fila", 1, result);
+    }
+
+    // Caso inválido: Nombre nulo
+    @Test
+    public void testDelete_NullNombre() {
+        Parcela parcela = new Parcela("", "Descripción", 5, 100.00);
+        int result = parcelaRepository.delete(parcela);
+        assertEquals("Un nombre nulo debería devolver -1", -1, result);
+    }
+
+    // Caso inválido: Nombre vacío
+    @Test
+    public void testDelete_EmptyNombre() {
+        Parcela parcela = new Parcela("", "Descripción", 5, 100.00);
+        int result = parcelaRepository.delete(parcela);
+        assertEquals("Un nombre vacío debería devolver -1", -1, result);
+    }
+
+    // Caso inválido: Parcela no existente
+    @Test
+    public void testDelete_NonExistentParcela() {
+        Parcela parcela = new Parcela("NoExiste", "Descripción", 5, 100.00);
+        int result = parcelaRepository.delete(parcela);
+        assertEquals("Se espera que no se elimine ninguna fila", 0, result);
+    }
+
 }
