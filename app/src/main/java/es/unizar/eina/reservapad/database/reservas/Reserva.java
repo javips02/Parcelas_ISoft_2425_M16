@@ -52,7 +52,7 @@ public class Reserva {
 
     /** Devuelve el nombre del Cliente de la reserva */
     public @NonNull String getNombreCliente() {
-        return this.nombreCliente;
+            return this.nombreCliente;
     }
 
     /** Permite actualizar el nombre del Cliente de la reserva */

@@ -64,6 +64,21 @@ public class ReservaRepository {
          * devuelto por la base de datos, se puede utilizar un Future.
          */
 
+        // Comprobaciones previas a la inserción de la reserva
+        if(reserva.getNombreCliente() == null){
+            Log.d("ReservaRepository", "El nombre de una reserva nod ebe ser nulo");
+            return -1;
+        } else if (reserva.getNombreCliente().isEmpty()){
+            Log.d("ReservaRepository", "El nombre de una reserva nod ebe ser vacío");
+            return -1;
+        } else if (reserva.getFechaEntrada() == null || reserva.getFechaSalida() == null){
+            Log.d("ReservaRepository", "Las fechas de una reserva no deben ser nulas");
+            return -1;
+        } else if (reserva.getFechaEntrada().isEmpty() || reserva.getFechaSalida().isEmpty()){
+            Log.d("ReservaRepository", "Las fechas de una reserva no deben ser vacías");
+            return -1;
+        }
+
         Future<Long> future = ReservaRoomDatabase.databaseWriteExecutor.submit(() -> {
             return mReservaDao.insert(reserva);
         });
@@ -82,6 +97,28 @@ public class ReservaRepository {
      *          ctualizadas. En caso contrario, devuelve -1 para indicar el fallo.
      */
     public int update(Reserva reserva) {
+
+        // Comprobaciones previas a la actualización de la reserva
+        if(reserva.getNombreCliente() == null){
+            Log.d("ReservaRepository", "El nombre de una reserva nod ebe ser nulo");
+            return -1;
+        } else if (reserva.getNombreCliente().isEmpty()){
+            Log.d("ReservaRepository", "El nombre de una reserva nod ebe ser vacío");
+            return -1;
+        } else if (reserva.getFechaEntrada() == null || reserva.getFechaSalida() == null){
+            Log.d("ReservaRepository", "Las fechas de una reserva no deben ser nulas");
+            return -1;
+        } else if (reserva.getFechaEntrada().isEmpty() || reserva.getFechaSalida().isEmpty()){
+            Log.d("ReservaRepository", "Las fechas de una reserva no deben ser vacías");
+            return -1;
+        } else if(reserva.getTlfCliente() == null) {
+            Log.d("ReservaRepository", "El tlf de una reserva no puede ser nulo");
+            return -1;
+        } else if(reserva.getTlfCliente() / 1000000000 > 0 || reserva.getTlfCliente() /100000000 <=0) {
+            Log.d("ReservaRepository", "El tlf de una reserva debe tener exactamente 9 dígitos");
+            return -1;
+        }
+
         Future<Integer> future = ReservaRoomDatabase.databaseWriteExecutor.submit(() ->
                 mReservaDao.update(reserva)
         );

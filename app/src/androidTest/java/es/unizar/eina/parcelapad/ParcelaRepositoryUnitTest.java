@@ -39,6 +39,9 @@ public class ParcelaRepositoryUnitTest {
         db.close();
     }
 
+    /*
+     *  TESTS DE INSERCIÓN
+     */
     // Caso válido: Parcela con datos correctos
     @Test
     public void testInsert_ValidParcela() {
